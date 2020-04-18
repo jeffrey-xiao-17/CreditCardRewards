@@ -124,18 +124,17 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
                 pickerMultiplier = card.groceriesCBP
             }
         } else if row == 1 {
-            if (endOfBase != nil && filtersLabel.text!.count == 17) {
+            if (endOfBase != nil && filtersLabel.text!.count == 24) {
                 pickerMultiplier = max(card.shoppingCBP, card.amazonCBP)
             } else {
                 pickerMultiplier = max(card.groceriesCBP, card.amazonCBP)
             }
             filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
         } else if row == 2 {
-            if (endOfBase != nil && filtersLabel.text!.count == 17) {
+            if (endOfBase != nil && filtersLabel.text!.count == 29) {
                 pickerMultiplier = max(card.shoppingCBP, card.wholeFoodsCBP)
             } else {
                 pickerMultiplier = max(card.groceriesCBP, card.wholeFoodsCBP)
-                
             }
             filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
         }

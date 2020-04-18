@@ -22,10 +22,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
     var allCards: [Card] = []
-    var showCards: [Card] = []
     var addedCards: [Card] = []
     var unaddedCards: [Card] = []
-    var uid: String = "invalid-override"
+    var uid: String = ""
+    var cards: [NSDictionary] = []
     
     static let shoppingAndGroceriesSource = ["All", "Amazon", "Whole Foods"]
 
@@ -38,21 +38,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         print(uid)
         ref = Database.database().reference()
         
-        var cards: [NSDictionary] = []
         ref.child("cards").observe(DataEventType.value) { (snapshot) in
             if let c = snapshot.value as? [NSDictionary] {
-                cards = c
+                self.cards = c
             }
             DispatchQueue.main.async {
                 self.homeCollectionView.reloadData()
             }
         }
-        print("before")
+
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
                 var cardArray = [Card]()
                 for myCard in myCards {
-                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = cards[id - 1]["name"] as? String, let tags = cards[id - 1]["tags"] as? [NSDictionary], let imageLink = cards[id - 1]["imageUrl"] as? String {
+                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
                         
                         let dining = tags[0]["cashBackPercent"] as! Double
                         let travel = tags[1]["cashBackPercent"] as! Double
@@ -80,13 +79,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
                 
                 DispatchQueue.main.async {
-                    print("inside - viewDidLoad (CCC), second")
+                    print(self.addedCards)
                     self.homeCollectionView.reloadData()
                 }
-                print("outside - viewDidLoad (CCC), second")
             }
             
-            print("asdf")
             self.homeCollectionView.reloadData()
         })
         
@@ -106,7 +103,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
-        showCards = addedCards
         switch sender.selectedSegmentIndex {
         case 0:
             filtersLabel.text = "Filter: None"
@@ -148,20 +144,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return showCards.count
+        return addedCards.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("adsfsa")
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CardCollectionViewCell
         
-        cell.cardImageView.kf.setImage(with: showCards[indexPath.item].imageUrl)
-        cell.cardLabel.text = showCards[indexPath.item].cardName
+        cell.cardImageView.kf.setImage(with: addedCards[indexPath.item].imageUrl)
+        cell.cardLabel.text = addedCards[indexPath.item].cardName
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "CardViewSegue", sender: allCards[showCards[indexPath.item].id - 1])
+        performSegue(withIdentifier: "CardViewSegue", sender: allCards[addedCards[indexPath.item].id - 1])
     }
     
     
@@ -189,6 +185,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 ccVC.addedCards = self.addedCards
                 ccVC.unaddedCards = self.unaddedCards
                 ccVC.uid = self.uid
+                ccVC.cards = self.cards
             }
         case .home:
             break
@@ -200,8 +197,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if let aVC = analyticsNavController.topViewController as? AnalyticsTableViewController {
                 aVC.addedCards = self.addedCards
                 aVC.uid = self.uid
+                aVC.cards = self.cards
             }
-            print("analytics")
         }
     }
     
@@ -218,7 +215,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     private func sortToShowBest(tag: Int) {
-        showCards.sort { (cardA, cardB) -> Bool in
+        addedCards.sort { (cardA, cardB) -> Bool in
             if tag == 1 {
                 return cardA.diningCBP >= cardB.diningCBP
             } else if tag == 2 {
@@ -231,30 +228,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 return cardA.entertainmentCBP >= cardB.entertainmentCBP
             } else if tag == 6 {
                 return cardA.groceriesCBP >= cardB.groceriesCBP
-            } else if tag == 7 {
-                if (cardA.amazonCBP != cardB.amazonCBP) {
-                    return cardA.amazonCBP > cardB.amazonCBP
-                } else {
-                    return cardA.shoppingCBP >= cardB.shoppingCBP
-                }
-            } else if tag == 8 {
-                if (cardA.amazonCBP != cardB.amazonCBP) {
-                    return cardA.amazonCBP > cardB.amazonCBP
-                } else {
-                    return cardA.groceriesCBP >= cardB.groceriesCBP
-                }
-            } else if tag == 9 {
-                if (cardA.wholeFoodsCBP != cardB.wholeFoodsCBP) {
-                    return cardA.wholeFoodsCBP > cardB.wholeFoodsCBP
-                } else {
-                    return cardA.shoppingCBP >= cardB.shoppingCBP
-                }
+            } else if tag == 7 {    // Shopping, Amazon
+                return max(cardA.amazonCBP, cardA.shoppingCBP) >= max(cardB.amazonCBP, cardB.shoppingCBP)
+            } else if tag == 8 {    // Groceries, Amazon
+                return max(cardA.amazonCBP, cardA.groceriesCBP) >= max(cardB.amazonCBP, cardB.groceriesCBP)
+            } else if tag == 9 {    // Shopping, Whole Foods
+                return max(cardA.wholeFoodsCBP, cardA.shoppingCBP) >= max(cardB.wholeFoodsCBP, cardB.shoppingCBP)
             } else /* if tag == 10 */ {
-                if (cardA.wholeFoodsCBP != cardB.wholeFoodsCBP) {
-                    return cardA.wholeFoodsCBP > cardB.wholeFoodsCBP
-                } else {
-                    return cardA.groceriesCBP >= cardB.groceriesCBP
-                }
+                return max(cardA.wholeFoodsCBP, cardA.groceriesCBP) >= max(cardB.wholeFoodsCBP, cardB.groceriesCBP)
             }
         }
     }
@@ -289,26 +270,31 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         
         if row == 0 {
             filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
-            
             if (filtersLabel.text!.count == 16) {
+                // prev: shopping
                 sortToShowBest(tag: 4)
             } else {
+                // prev: groceries
                 sortToShowBest(tag: 6)
             }
-        } else if row == 1 {
-            if (endOfBase != nil && filtersLabel.text!.count == 17) {
+        } else if row == 1 {    // target: amazon
+            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
+            if (filtersLabel.text!.count == 24) {
+                // prev: shopping
                 sortToShowBest(tag: 7)
             } else {
+                // prev: groceries
                 sortToShowBest(tag: 8)
             }
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
-        } else if row == 2 {
-            if (endOfBase != nil && filtersLabel.text!.count == 17) {
+        } else if row == 2 {    // target: whole foods
+            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
+            if (filtersLabel.text!.count == 29) {
+                // prev: shopping
                 sortToShowBest(tag: 9)
             } else {
+                // prev: groceries
                 sortToShowBest(tag: 10)
             }
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
         }
         self.homeCollectionView.reloadData()
     }

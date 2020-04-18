@@ -32,27 +32,22 @@ class AnalyticsTableViewController: UITableViewController {
     var refHandle: DatabaseHandle!
     let transition = SlideTransition()
     var uid: String = "invalid-override"
+    var cards: [NSDictionary] = []
+    let currencyFormatter = NumberFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale.current
         
         ref = Database.database().reference()
-        
-        var personal: [NSDictionary] = []
-        ref.child("users/\(uid)/cards").observe(DataEventType.value) { (snapshot) in
-            if let p = snapshot.value as? [NSDictionary] {
-                personal = p
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
-        refHandle = ref.child("cards").observe(DataEventType.value, with: { (snapshot) in
-            if let cards = snapshot.value as? [NSDictionary] {
+
+        refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
+            if let myCards = snapshot.value as? [NSDictionary] {
                 var cardArray = [Card]()
-                for card in cards {
-                    if let name = card["name"] as? String, let tags = card["tags"] as? [NSDictionary], let imageLink = card["imageUrl"] as? String, let id = card["id"] as? Int, let added = personal[id - 1]["added"] as? Bool, let cash = personal[id - 1]["cashSaved"] as? Double {
+                for myCard in myCards {
+                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
                         
                         let dining = tags[0]["cashBackPercent"] as! Double
                         let travel = tags[1]["cashBackPercent"] as! Double
@@ -66,19 +61,25 @@ class AnalyticsTableViewController: UITableViewController {
                         cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, imageUrl: imageLink, added: added, id: id, cash: cash))
                     }
                 }
+                
                 self.addedCards = []
+                
                 for card in cardArray {
                     if card.added {
                         self.addedCards.append(card)
                     }
                 }
+                
                 self.addedCards.sort { (cardA, cardB) -> Bool in
                     return cardA.cashSaved >= cardB.cashSaved
                 }
+                
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             }
+            
+            self.tableView.reloadData()
         })
     }
     
@@ -122,8 +123,8 @@ class AnalyticsTableViewController: UITableViewController {
             for card in addedCards {
                 sum += card.cashSaved
             }
-            
-            cell.totalMoneyEarned.text = "$\(Double(String(format: "%.2f", sum))!)"
+        
+            cell.totalMoneyEarned.text = currencyFormatter.string(from: NSNumber(value: sum))!
             showOrNoShowTableViewCell(b: true)
         }
         return cell
@@ -156,6 +157,7 @@ class AnalyticsTableViewController: UITableViewController {
             collectionNavController.modalPresentationStyle = .fullScreen
             if let ccVC = collectionNavController.topViewController as? CardCollectionViewController {
                 ccVC.uid = self.uid
+                ccVC.cards = self.cards
             }
             self.present(collectionNavController, animated: true, completion: nil)
         case .home:
@@ -164,11 +166,12 @@ class AnalyticsTableViewController: UITableViewController {
             
             if let hVC = homeNavController.topViewController as? HomeViewController {
                 hVC.uid = self.uid
+                hVC.cards = self.cards
             }
             
             self.present(homeNavController, animated: true, completion: nil)
         case .analytics:
-            print("analytics")
+            break
         }
     }
     

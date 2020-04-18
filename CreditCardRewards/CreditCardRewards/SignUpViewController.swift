@@ -45,7 +45,7 @@ class SignUpViewController: UIViewController {
                         }
                     }
                     
-                    // UPDATE THIS TO ACCOUNT FOR TOTAL NUMBER OF CARDS
+                    // TODO: UPDATE THIS TO ACCOUNT FOR TOTAL NUMBER OF CARDS (0 to N-1)
                     for index in 0...5 {
                         ref.child("users/\(result!.user.uid)/cards/\(index)").setValue(["added": false, "cashSaved": 0.0, "id": index + 1]) { (error, ref) in
                             if error != nil {

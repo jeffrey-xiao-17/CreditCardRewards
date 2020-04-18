@@ -21,29 +21,18 @@ class CardCollectionViewController: UICollectionViewController {
     let sectionHeaderView = "SectionHeaderView"
     let transition = SlideTransition()
     var uid: String = "invalid-override"
+    var cards: [NSDictionary] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
-        var cards: [NSDictionary] = []
-        ref.child("cards").observe(DataEventType.value) { (snapshot) in
-            if let c = snapshot.value as? [NSDictionary] {
-                cards = c
-            }
-            DispatchQueue.main.async {
-                print("inside - viewDidLoad (CCC), first")
-                //self.collectionView.reloadData()
-            }
-            print("outside - viewDidLoad (CCC), first")
-        }
-        print("before")
+    
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
                 var cardArray = [Card]()
-                print(self.uid)
                 for myCard in myCards {
-                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = cards[id - 1]["name"] as? String, let tags = cards[id - 1]["tags"] as? [NSDictionary], let imageLink = cards[id - 1]["imageUrl"] as? String {
+                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
                         
                         let dining = tags[0]["cashBackPercent"] as! Double
                         let travel = tags[1]["cashBackPercent"] as! Double
@@ -59,7 +48,6 @@ class CardCollectionViewController: UICollectionViewController {
                 }
                 
                 self.allCards = cardArray
-                print(self.allCards)
                 self.addedCards = []
                 self.unaddedCards = []
                 
@@ -72,16 +60,10 @@ class CardCollectionViewController: UICollectionViewController {
                 }
                 
                 DispatchQueue.main.async {
-                    print("inside - viewDidLoad (CCC), second")
                     self.collectionView.reloadData()
                 }
-                print("outside - viewDidLoad (CCC), second")
             }
-            
-            print("asdf")
         })
-        print("outer")
-        //self.collectionView.reloadData()
         let itemSize = UIScreen.main.bounds.width/2 - 2
         
         let layout = UICollectionViewFlowLayout()
@@ -93,8 +75,6 @@ class CardCollectionViewController: UICollectionViewController {
         layout.headerReferenceSize = CGSize(width: 0, height: 50)
 
         collectionView.collectionViewLayout = layout
-//        collectionView.reloadData()
-        
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -185,6 +165,7 @@ class CardCollectionViewController: UICollectionViewController {
             
             if let hVC = homeNavController.topViewController as? HomeViewController {
                 hVC.uid = self.uid
+                hVC.cards = self.cards
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -195,6 +176,7 @@ class CardCollectionViewController: UICollectionViewController {
             
             if let aVC = analyticsNavController.topViewController as? AnalyticsTableViewController {
                 aVC.uid = self.uid
+                aVC.cards = self.cards
             }
         }
     }
