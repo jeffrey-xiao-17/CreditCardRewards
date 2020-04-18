@@ -33,9 +33,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var groceriesPickerOn: Bool = false
     
     
-    static let shoppingSource = ["All", "Amazon", "Whole Foods"]
-    static let groceriesSource = ["All", "Amazon", "Whole Foods", "Apple"]
-    static let travelSource = ["All, United, Delta, Southwest, British Airways, Uber"]
+    static let shoppingSource = ["All", "Amazon", "Whole Foods", "Apple"]
+    static let groceriesSource = ["All", "Amazon", "Whole Foods"]
+    static let travelSource = ["All", "United", "Delta", "Southwest", "British Airways", "Uber"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +43,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         homeCollectionView.delegate = self
         pickerView.delegate = self
         pickerView.dataSource = self
+        pickerViewGroceries.delegate = self
+        pickerViewGroceries.dataSource = self
+        pickerViewTravel.delegate = self
+        pickerViewTravel.dataSource = self
 
         ref = Database.database().reference()
 
@@ -93,7 +97,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         })
         
         filtersLabel.text = "Filter: None"
-        pickerView.isHidden = true
+        adjustPickerBools(shopping: false, groceries: false, travel: false)
         let itemSize = UIScreen.main.bounds.width/2 - 2
         
         let layout = UICollectionViewFlowLayout()
@@ -111,9 +115,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         shoppingPickerOn = shopping
         travelPickerOn = travel
         groceriesPickerOn = groceries
-        pickerView.isHidden = shoppingPickerOn
-        pickerViewGroceries.isHidden = groceriesPickerOn
-        pickerViewTravel.isHidden = travelPickerOn
+        pickerView.isHidden = !shoppingPickerOn
+        pickerViewGroceries.isHidden = !groceriesPickerOn
+        pickerViewTravel.isHidden = !travelPickerOn
     }
     
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
@@ -128,7 +132,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         case 2:
             filtersLabel.text = "Filter: Travel"
             sortToShowBest(tag: 2)
-            pickerView.selectRow(0, inComponent: 0, animated: false)
+            pickerViewTravel.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: false, travel: true)
         case 3:
             filtersLabel.text = "Filter: Gas"
@@ -146,7 +150,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         case 6:
             filtersLabel.text = "Filter: Groceries"
             sortToShowBest(tag: 6)
-            pickerView.selectRow(0, inComponent: 0, animated: false)
+            pickerViewGroceries.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: true, travel: false)
         default:
             filtersLabel.text = ""
@@ -301,9 +305,9 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             return HomeViewController.shoppingSource.count
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             return HomeViewController.groceriesSource.count
         }
         
@@ -312,7 +316,7 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 sortToShowBest(tag: 4)
@@ -326,7 +330,7 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Apple" : "\(filtersLabel.text![..<endOfBase!]), Apple"
                 sortToShowBest(tag: 16)
             }
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 sortToShowBest(tag: 6)
@@ -337,7 +341,7 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 sortToShowBest(tag: 10)
             }
-        } else if (travelPickerOn) {
+        } else if (pickerView.tag == 30) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 sortToShowBest(tag: 2)
@@ -347,13 +351,13 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
             } else if row == 2 {    // target: delta
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Delta" : "\(filtersLabel.text![..<endOfBase!]), Delta"
                 sortToShowBest(tag: 12)
-            } else if row == 1 {    // target: southwest
+            } else if row == 3 {    // target: southwest
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Southwest" : "\(filtersLabel.text![..<endOfBase!]), Southwest"
                 sortToShowBest(tag: 13)
-            } else if row == 2 {    // target: british airways
+            } else if row == 4 {    // target: british airways
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), British Airways" : "\(filtersLabel.text![..<endOfBase!]), British Airways"
                 sortToShowBest(tag: 14)
-            } else if row == 1 {    // target: uber
+            } else if row == 5 {    // target: uber
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Uber" : "\(filtersLabel.text![..<endOfBase!]), Uber"
                 sortToShowBest(tag: 15)
             }
@@ -364,9 +368,9 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             return HomeViewController.shoppingSource[row]
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             return HomeViewController.groceriesSource[row]
         }
         return HomeViewController.travelSource[row]

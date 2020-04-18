@@ -44,6 +44,10 @@ class AddCashViewController: UIViewController {
         cardName.text = "\(card!.cardName)"
         pickerView.delegate = self
         pickerView.dataSource = self
+        pickerViewGroceries.delegate = self
+        pickerViewGroceries.dataSource = self
+        pickerViewTravel.delegate = self
+        pickerViewTravel.dataSource = self
         inputAmountTextField.delegate = self
         filtersLabel.text = "Filter: Dining"
         segmentMultiplier = card.diningCBP
@@ -56,9 +60,9 @@ class AddCashViewController: UIViewController {
         shoppingPickerOn = shopping
         travelPickerOn = travel
         groceriesPickerOn = groceries
-        pickerView.isHidden = shoppingPickerOn
-        pickerViewGroceries.isHidden = groceriesPickerOn
-        pickerViewTravel.isHidden = travelPickerOn
+        pickerView.isHidden = !shoppingPickerOn
+        pickerViewGroceries.isHidden = !groceriesPickerOn
+        pickerViewTravel.isHidden = !travelPickerOn
     }
     
     
@@ -71,7 +75,7 @@ class AddCashViewController: UIViewController {
         case 1:
             filtersLabel.text = "Filter: Travel"
             segmentMultiplier = card.travelCBP
-            pickerView.selectRow(0, inComponent: 0, animated: false)
+            pickerViewTravel.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: false, travel: true)
         case 2:
             filtersLabel.text = "Filter: Gas"
@@ -89,7 +93,7 @@ class AddCashViewController: UIViewController {
         case 5:
             filtersLabel.text = "Filter: Groceries"
             segmentMultiplier = card.groceriesCBP
-            pickerView.selectRow(0, inComponent: 0, animated: false)
+            pickerViewGroceries.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: true, travel: false)
         default:
             filtersLabel.text = ""
@@ -125,9 +129,9 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             return HomeViewController.shoppingSource.count
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             return HomeViewController.groceriesSource.count
         }
         
@@ -136,7 +140,7 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.shoppingCBP
@@ -150,7 +154,7 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Apple" : "\(filtersLabel.text![..<endOfBase!]), Apple"
                 pickerMultiplier = card.appleCBP
             }
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.groceriesCBP
@@ -161,7 +165,7 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 pickerMultiplier = card.wholeFoodsCBP
             }
-        } else if (travelPickerOn) {
+        } else if (pickerView.tag == 30) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.travelCBP
@@ -185,9 +189,9 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if (shoppingPickerOn) {
+        if (pickerView.tag == 10) {
             return HomeViewController.shoppingSource[row]
-        } else if (groceriesPickerOn) {
+        } else if (pickerView.tag == 20) {
             return HomeViewController.groceriesSource[row]
         }
         return HomeViewController.travelSource[row]

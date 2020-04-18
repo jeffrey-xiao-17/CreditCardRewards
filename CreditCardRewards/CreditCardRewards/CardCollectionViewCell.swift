@@ -14,6 +14,5 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var cardImageView: UIImageView!
     @IBOutlet var cardLabel: UILabel!
-    @IBOutlet var cardAddedCheck: UIImageView!
 }
 

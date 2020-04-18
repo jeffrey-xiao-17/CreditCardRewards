@@ -74,7 +74,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="bWy-yh-FTc"/>
                                 </connections>
                             </collectionView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxF-q1-Zar">
+                            <pickerView tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxF-q1-Zar">
                                 <rect key="frame" x="0.0" y="249" width="414" height="88"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="88" id="DEm-l9-olC"/>
@@ -101,10 +101,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5M-KV-tg5">
+                            <pickerView tag="30" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U5M-KV-tg5">
                                 <rect key="frame" x="0.0" y="249" width="414" height="88"/>
                             </pickerView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKD-Gf-NFV">
+                            <pickerView tag="20" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gKD-Gf-NFV">
                                 <rect key="frame" x="0.0" y="249" width="414" height="88"/>
                             </pickerView>
                         </subviews>
@@ -125,6 +125,7 @@
                             <constraint firstItem="U5M-KV-tg5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="WiE-Xd-qFi"/>
                             <constraint firstItem="Fmt-tt-f37" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zhb-2Q-8eP"/>
                             <constraint firstItem="gKD-Gf-NFV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="c98-07-yZe"/>
+                            <constraint firstItem="U5M-KV-tg5" firstAttribute="height" secondItem="zxF-q1-Zar" secondAttribute="height" id="d5p-8U-Cvd"/>
                             <constraint firstItem="zxF-q1-Zar" firstAttribute="leading" secondItem="Fmt-tt-f37" secondAttribute="leading" id="kLN-iQ-PcW"/>
                             <constraint firstItem="U5M-KV-tg5" firstAttribute="top" secondItem="l3J-YG-IJX" secondAttribute="bottom" constant="8" id="kLe-nf-q2Z"/>
                             <constraint firstItem="c9W-2p-joc" firstAttribute="top" secondItem="U5M-KV-tg5" secondAttribute="bottom" constant="8" id="o7K-R2-MOe"/>
@@ -491,7 +492,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeQ-qN-6Kk">
+                            <pickerView tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qeQ-qN-6Kk">
                                 <rect key="frame" x="0.0" y="502" width="414" height="146"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="146" id="BDc-tG-TQ6"/>
@@ -537,10 +538,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hi7-HR-OQX">
+                            <pickerView tag="20" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hi7-HR-OQX">
                                 <rect key="frame" x="0.0" y="510" width="414" height="130"/>
                             </pickerView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-no-hZg">
+                            <pickerView tag="30" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZbL-no-hZg">
                                 <rect key="frame" x="0.0" y="510" width="414" height="130"/>
                             </pickerView>
                         </subviews>
