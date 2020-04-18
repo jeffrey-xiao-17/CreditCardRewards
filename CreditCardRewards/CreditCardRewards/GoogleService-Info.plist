@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1039281175822-fl5ltnpe307aj6dffnqd0g4s4l16ugto.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1039281175822-fl5ltnpe307aj6dffnqd0g4s4l16ugto</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBQup7DagItBib6qWgh1Qjxz9ZcjPeaiNQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1039281175822</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>jeffreyxiao.CreditCardRewards</string>
+	<key>PROJECT_ID</key>
+	<string>creditcardrewards-bd99f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>creditcardrewards-bd99f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1039281175822:ios:c17a029d4158062599eb5f</string>
+	<key>DATABASE_URL</key>
+	<string>https://creditcardrewards-bd99f.firebaseio.com</string>
+</dict>
+</plist>

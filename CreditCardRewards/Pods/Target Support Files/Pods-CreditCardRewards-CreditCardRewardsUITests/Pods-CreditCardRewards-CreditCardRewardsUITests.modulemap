@@ -1,0 +1,6 @@
+framework module Pods_CreditCardRewards_CreditCardRewardsUITests {
+  umbrella header "Pods-CreditCardRewards-CreditCardRewardsUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
