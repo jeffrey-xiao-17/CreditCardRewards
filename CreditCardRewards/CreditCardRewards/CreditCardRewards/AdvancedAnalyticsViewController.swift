@@ -56,7 +56,7 @@ class AdvancedAnalyticsViewController: UIViewController {
         } else {
             for card in addedCards {
                 if card.filterSaved[filter] > 0.0 {
-                    sum += filterSaved[filter]
+                    sum += card.filterSaved[filter]
                     entries.append(PieChartDataEntry(value: card.filterSaved[filter], label: card.cardName))
                 }
             }
