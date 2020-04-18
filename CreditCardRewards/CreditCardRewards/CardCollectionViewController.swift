@@ -101,8 +101,6 @@ class CardCollectionViewController: UICollectionViewController {
             cell.cardLabel.text = unaddedCards[indexPath.item].cardName
         }
         
-        cell.cardAddedCheck.isHidden = true
-        
         return cell
     }
     

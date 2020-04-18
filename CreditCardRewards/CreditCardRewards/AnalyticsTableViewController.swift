@@ -35,6 +35,7 @@ class AnalyticsTableViewController: UITableViewController {
     var cards: [NSDictionary] = []
     let currencyFormatter = NumberFormatter()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         currencyFormatter.usesGroupingSeparator = true
@@ -112,7 +113,7 @@ class AnalyticsTableViewController: UITableViewController {
         if (indexPath.row != 0) {
             cell.cardImageView.kf.setImage(with: addedCards[indexPath.row - 1].imageUrl)
             cell.cardNameLabel.text = addedCards[indexPath.row - 1].cardName
-            cell.cardCashBackLabel.text = "$\(addedCards[indexPath.row - 1].cashSaved)"
+            cell.cardCashBackLabel.text = currencyFormatter.string(from: NSNumber(value: addedCards[indexPath.row - 1].cashSaved))
             showOrNoShowTableViewCell(b: false)
         } else {
             cell.selectionStyle = .none

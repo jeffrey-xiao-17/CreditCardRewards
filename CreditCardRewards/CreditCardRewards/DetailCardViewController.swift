@@ -18,7 +18,7 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         card!.cashSaved = newVal
         ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/cashSaved" : newVal])
 
-        cardCashSaved.text = "Cash saved ($): \(newVal)"
+        cardCashSaved.text = "Cash saved: " + currencyFormatter.string(from: NSNumber(value: newVal))!
     }
     
     var card: Card?
@@ -32,10 +32,15 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
     var rewardsText: String = "None :("
     var ref: DatabaseReference!
     var uid: String = "invalid-override"
+    let currencyFormatter = NumberFormatter()
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        currencyFormatter.usesGroupingSeparator = true
+        currencyFormatter.numberStyle = .currency
+        currencyFormatter.locale = Locale.current
         formatRewardsText()
         changeAddVisibility()
     }
@@ -52,7 +57,7 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         cardRewards.text = "\(rewardsText)"
         addRemoveButton.setTitle(card!.added ? "Remove Card" : "Add Card", for: .normal)
         cardAddedLabel.text = card!.added ? "Added" : "Not Added"
-        cardCashSaved.text = "Cash saved ($): \(card!.cashSaved)"
+        cardCashSaved.text = "Cash saved: " + currencyFormatter.string(from: NSNumber(value: card!.cashSaved))!
         changeAddVisibility()
     }
     

@@ -138,6 +138,7 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
             }
             filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
         }
+        cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
     }
     
     

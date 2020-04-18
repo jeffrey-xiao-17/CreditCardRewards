@@ -9,9 +9,11 @@
 import UIKit
 import FirebaseAuth
 import Kingfisher
+import Firebase
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var cardsRegisteredLabel: UILabel!
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
     let transition = SlideTransition()
@@ -20,11 +22,28 @@ class ProfileViewController: UIViewController {
     var unaddedCards: [Card] = []
     var uid: String = ""
     var cards: [NSDictionary] = []
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        profilePictureView.layer.cornerRadius = profilePictureView.frame.width / 2;
+        profilePictureView.clipsToBounds = true
+        
+        ref = Database.database().reference()
+        
+        ref.child("users/\(uid)").observe(DataEventType.value, with: { (snapshot) in
+            if let info = snapshot.value as? NSDictionary, let firstName = info["first_name"] as? String, let lastName = info["last_name"] as? String {
+                self.profileNameLabel.text = "\(firstName) \(lastName)"
+                self.cardsRegisteredLabel.text = "Total Cards Registered: \(self.addedCards.count)"
+            }
+        })
+        
+    }
+    
+    @IBAction func clearDataButtonPressed(_ sender: Any) {
+        for card in allCards {
+            ref.updateChildValues(["users/\(self.uid)/cards/\(card.id - 1)/cashSaved" : 0.0])
+        }
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIBarButtonItem) {
@@ -36,6 +55,10 @@ class ProfileViewController: UIViewController {
         } catch let error {
             print("\(error)")
         }
+    }
+    
+    @IBAction func imagePressed(sender: UIGestureRecognizer) {
+        presentImagePicker()
     }
     
     @IBAction func didTapMenu(_ sender: UIBarButtonItem) {
@@ -89,7 +112,20 @@ class ProfileViewController: UIViewController {
         }
     }
     
-
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            profilePictureView.image = selectedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func presentImagePicker() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
 }
 
 extension ProfileViewController: UIViewControllerTransitioningDelegate {
