@@ -9,6 +9,7 @@
 import UIKit
 
 enum MenuType: Int {
+    case profile
     case home
     case cards
     case analytics

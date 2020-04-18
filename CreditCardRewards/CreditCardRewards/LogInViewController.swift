@@ -47,6 +47,7 @@ class LogInViewController: UIViewController {
                         ref.child("cards").observe(DataEventType.value) { (snapshot) in
                             if let c = snapshot.value as? [NSDictionary] {
                                 hVC.cards = c
+                                
                                 self.view.window?.rootViewController = homeNav
                                 self.view.window?.makeKeyAndVisible()
                             }
@@ -55,15 +56,12 @@ class LogInViewController: UIViewController {
                 }
             }
         }
-        
     }
 
     func validateItems() -> String? {
-        
         if emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             return "Empty fields found."
         }
-        
         return nil
     }
 }

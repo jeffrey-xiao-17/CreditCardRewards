@@ -176,6 +176,18 @@ class CardCollectionViewController: UICollectionViewController {
                 aVC.uid = self.uid
                 aVC.cards = self.cards
             }
+        case .profile:
+            guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
+            profileNavController.modalPresentationStyle = .fullScreen
+            self.present(profileNavController, animated: true, completion: nil)
+            
+            if let pVC = profileNavController.topViewController as? ProfileViewController {
+                pVC.allCards = self.allCards
+                pVC.addedCards = self.addedCards
+                pVC.unaddedCards = self.unaddedCards
+                pVC.uid = self.uid
+                pVC.cards = self.cards
+            }
         }
     }
 }

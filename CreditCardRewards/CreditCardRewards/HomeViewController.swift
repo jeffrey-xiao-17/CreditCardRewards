@@ -37,15 +37,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         pickerView.dataSource = self
 
         ref = Database.database().reference()
-        
-//        ref.child("cards").observe(DataEventType.value) { (snapshot) in
-//            if let c = snapshot.value as? [NSDictionary] {
-//                self.cards = c
-//            }
-//            DispatchQueue.main.async {
-//                self.homeCollectionView.reloadData()
-//            }
-//        }
 
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
@@ -198,6 +189,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 aVC.addedCards = self.addedCards
                 aVC.uid = self.uid
                 aVC.cards = self.cards
+            }
+        case .profile:
+            guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
+            profileNavController.modalPresentationStyle = .fullScreen
+            self.present(profileNavController, animated: true, completion: nil)
+            
+            if let pVC = profileNavController.topViewController as? ProfileViewController {
+                pVC.allCards = self.allCards
+                pVC.addedCards = self.addedCards
+                pVC.unaddedCards = self.unaddedCards
+                pVC.uid = self.uid
+                pVC.cards = self.cards
             }
         }
     }

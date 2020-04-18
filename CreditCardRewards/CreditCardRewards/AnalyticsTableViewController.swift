@@ -78,7 +78,6 @@ class AnalyticsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
-            
             self.tableView.reloadData()
         })
     }
@@ -96,7 +95,6 @@ class AnalyticsTableViewController: UITableViewController {
             performSegue(withIdentifier: "CardViewSegue", sender: addedCards[indexPath.row-1])
             tableView.deselectRow(at: indexPath, animated: true)
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -155,10 +153,12 @@ class AnalyticsTableViewController: UITableViewController {
         case .cards:
             guard let collectionNavController = storyboard!.instantiateViewController(identifier: "CardsCollectionNavController") as? UINavigationController else { return }
             collectionNavController.modalPresentationStyle = .fullScreen
+            
             if let ccVC = collectionNavController.topViewController as? CardCollectionViewController {
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
             }
+            
             self.present(collectionNavController, animated: true, completion: nil)
         case .home:
             guard let homeNavController = storyboard!.instantiateViewController(identifier: "HomeNavController") as? UINavigationController else { return }
@@ -172,6 +172,16 @@ class AnalyticsTableViewController: UITableViewController {
             self.present(homeNavController, animated: true, completion: nil)
         case .analytics:
             break
+        case .profile:
+            guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
+            profileNavController.modalPresentationStyle = .fullScreen
+            self.present(profileNavController, animated: true, completion: nil)
+            
+            if let pVC = profileNavController.topViewController as? ProfileViewController {
+                pVC.addedCards = self.addedCards
+                pVC.uid = self.uid
+                pVC.cards = self.cards
+            }
         }
     }
     

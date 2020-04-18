@@ -74,12 +74,9 @@ class SignUpViewController: UIViewController {
     }
     
     func validateItems() -> String? {
-        
         if firstNameTextField.text!.isEmpty || lastNameTextField.text!.isEmpty || emailTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             return "Empty fields found."
         }
-        
         return nil
     }
-    
 }
