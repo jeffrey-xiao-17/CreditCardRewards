@@ -1,0 +1,250 @@
+{
+	"cards": [
+		{
+			"name": "Chase Freedom Unlimited",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 1.5
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 1.5
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 1.5
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1.5
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1.5
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 1.5
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 1.5
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 1.5
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/freedom_unlimited_card.png",
+            "added": false,
+            "id": 1,
+            "cashSaved": 0.0
+		},
+		{
+			"name": "Chase Freedom",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 5
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 1
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/freedom_card.png",
+            "added": false,
+            "id": 2,
+            "cashSaved": 0.0
+		},
+		{
+			"name": "Chase Freedom Student",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 1
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/freedom_student_card.png",
+            "added": false,
+            "id": 3,
+            "cashSaved": 0.0
+		},
+		{
+			"name": "Chase Sapphire Preferred",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 2
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 2
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 1
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/sapphire_preferred_card.png",
+            "added": false,
+            "id": 4,
+            "cashSaved": 0.0
+		},
+		{
+			"name": "Chase Sapphire Reserve",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 3
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 3
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 1
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/sapphire_reserve_card.png",
+            "added": false,
+            "id": 5,
+            "cashSaved": 0.0
+		},
+		{
+			"name": "Amazon Prime Rewards Visa Signature",
+			"tags": [
+				{
+					"tag": "Dining",
+					"cashBackPercent": 2
+				},
+				{
+					"tag": "Travel",
+					"cashBackPercent": 1
+				},
+				{
+					"tag": "Gas",
+					"cashBackPercent": 2
+				},
+				{
+					"tag": "Shopping",
+					"cashBackPercent": 1
+				},
+                {
+                    "tag": "Entertainment",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Groceries",
+                    "cashBackPercent": 1
+                },
+                {
+                    "tag": "Amazon",
+                    "cashBackPercent": 5
+                },
+                {
+                    "tag": "Whole Foods",
+                    "cashBackPercent": 5
+                }
+			],
+            "imageUrl": "https://creditcards.chase.com/K-Marketplace/images/cardart/amazon_card.png",
+            "added": false,
+            "id": 6,
+            "cashSaved": 0.0
+		}
+	]
+}
