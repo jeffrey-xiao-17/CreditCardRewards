@@ -41,10 +41,17 @@ class LogInViewController: UIViewController {
                     
                     if let hVC = homeNav?.topViewController as? HomeViewController {
                         hVC.uid = result!.user.uid
+                        
+                        let ref = Database.database().reference()
+                        
+                        ref.child("cards").observe(DataEventType.value) { (snapshot) in
+                            if let c = snapshot.value as? [NSDictionary] {
+                                hVC.cards = c
+                                self.view.window?.rootViewController = homeNav
+                                self.view.window?.makeKeyAndVisible()
+                            }
+                        }
                     }
-                    
-                    self.view.window?.rootViewController = homeNav
-                    self.view.window?.makeKeyAndVisible()
                 }
             }
         }

@@ -107,8 +107,6 @@ class CardCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(unaddedCards)
-        print(indexPath.item)
         if indexPath.section == 0 {
             performSegue(withIdentifier: "CardViewSegue", sender: addedCards[indexPath.item])
         } else {

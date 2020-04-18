@@ -14,11 +14,10 @@ import Firebase
 class DetailCardViewController: UIViewController, AddCashDelegate {
     func didAdd(_ cash: Double) {
         dismiss(animated: true, completion: nil)
-        print(card!.cashSaved)
         let newVal = card!.cashSaved + cash
         card!.cashSaved = newVal
         ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/cashSaved" : newVal])
-        print(newVal)
+
         cardCashSaved.text = "Cash saved ($): \(newVal)"
     }
     

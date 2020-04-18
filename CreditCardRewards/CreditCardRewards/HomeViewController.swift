@@ -35,22 +35,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         homeCollectionView.delegate = self
         pickerView.delegate = self
         pickerView.dataSource = self
-        print(uid)
+
         ref = Database.database().reference()
         
-        ref.child("cards").observe(DataEventType.value) { (snapshot) in
-            if let c = snapshot.value as? [NSDictionary] {
-                self.cards = c
-            }
-            DispatchQueue.main.async {
-                self.homeCollectionView.reloadData()
-            }
-        }
+//        ref.child("cards").observe(DataEventType.value) { (snapshot) in
+//            if let c = snapshot.value as? [NSDictionary] {
+//                self.cards = c
+//            }
+//            DispatchQueue.main.async {
+//                self.homeCollectionView.reloadData()
+//            }
+//        }
 
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
                 var cardArray = [Card]()
                 for myCard in myCards {
+ 
                     if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
                         
                         let dining = tags[0]["cashBackPercent"] as! Double
@@ -79,7 +80,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
                 
                 DispatchQueue.main.async {
-                    print(self.addedCards)
                     self.homeCollectionView.reloadData()
                 }
             }
