@@ -14,6 +14,7 @@
 		8856D6F324452F21000C4CD1 /* CardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856D6F224452F21000C4CD1 /* CardCollectionViewCell.swift */; };
 		88704CB22444F8AB0011CCCD /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88704CB12444F8AB0011CCCD /* MenuViewController.swift */; };
 		88704CB42444FE830011CCCD /* SlideTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88704CB32444FE830011CCCD /* SlideTransition.swift */; };
+		888D51C0244B7728004D5BD0 /* AdvancedAnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888D51BF244B7728004D5BD0 /* AdvancedAnalyticsViewController.swift */; };
 		88B25B8C244AA977008BCAFF /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B25B8B244AA977008BCAFF /* ProfileViewController.swift */; };
 		88B754D42447CEEF00095017 /* AnalyticsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B754D32447CEEF00095017 /* AnalyticsTableViewController.swift */; };
 		88BD25662447A30A009B2319 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88BD25652447A30A009B2319 /* SectionHeaderView.swift */; };
@@ -63,6 +64,7 @@
 		8856D6F224452F21000C4CD1 /* CardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewCell.swift; sourceTree = "<group>"; };
 		88704CB12444F8AB0011CCCD /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		88704CB32444FE830011CCCD /* SlideTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideTransition.swift; sourceTree = "<group>"; };
+		888D51BF244B7728004D5BD0 /* AdvancedAnalyticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedAnalyticsViewController.swift; sourceTree = "<group>"; };
 		88B25B8B244AA977008BCAFF /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		88B754D32447CEEF00095017 /* AnalyticsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsTableViewController.swift; sourceTree = "<group>"; };
 		88BD25652447A30A009B2319 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				8856D6F024452C9B000C4CD1 /* CardCollectionViewController.swift */,
 				88E69A4F2443DD2700F2716E /* HomeViewController.swift */,
 				88B754D32447CEEF00095017 /* AnalyticsTableViewController.swift */,
+				888D51BF244B7728004D5BD0 /* AdvancedAnalyticsViewController.swift */,
 				88CF530124491BDF00A37983 /* FirstViewController.swift */,
 				88CF52FD24490FC900A37983 /* LogInViewController.swift */,
 				88CF52FF2449159700A37983 /* SignUpViewController.swift */,
@@ -462,6 +465,7 @@
 				8856D6F124452C9B000C4CD1 /* CardCollectionViewController.swift in Sources */,
 				88CF53002449159700A37983 /* SignUpViewController.swift in Sources */,
 				88E69A4E2443DD2700F2716E /* SceneDelegate.swift in Sources */,
+				888D51C0244B7728004D5BD0 /* AdvancedAnalyticsViewController.swift in Sources */,
 				88704CB22444F8AB0011CCCD /* MenuViewController.swift in Sources */,
 				88BD25662447A30A009B2319 /* SectionHeaderView.swift in Sources */,
 				8856D6F324452F21000C4CD1 /* CardCollectionViewCell.swift in Sources */,

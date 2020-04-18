@@ -23,6 +23,7 @@ class CardCollectionViewController: UICollectionViewController {
     var uid: String = "invalid-override"
     var cards: [NSDictionary] = []
     var firstName: String = ""
+    var dateJoined: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,7 @@ class CardCollectionViewController: UICollectionViewController {
             if let myCards = snapshot.value as? [NSDictionary] {
                 var cardArray = [Card]()
                 for myCard in myCards {
-                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
+                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let filters = myCard["filters"] as? [NSDictionary], let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
                     
                     let dining = tags[0]["cashBackPercent"] as! Double
                     let travel = tags[1]["cashBackPercent"] as! Double
@@ -49,8 +50,23 @@ class CardCollectionViewController: UICollectionViewController {
                     let britishAirways = tags[11]["cashBackPercent"] as! Double
                     let uber = tags[12]["cashBackPercent"] as! Double
                     let apple = tags[13]["cashBackPercent"] as! Double
-                    
-                    cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash))
+                        
+                    let diningSaved = filters[0]["cashSaved"] as! Double
+                    let travelSaved = filters[1]["cashSaved"] as! Double
+                    let gasSaved = filters[2]["cashSaved"] as! Double
+                    let shoppingSaved = filters[3]["cashSaved"] as! Double
+                    let entertainmentSaved = filters[4]["cashSaved"] as! Double
+                    let groceriesSaved = filters[5]["cashSaved"] as! Double
+                    let amazonSaved = filters[6]["cashSaved"] as! Double
+                    let wholeFoodsSaved = filters[7]["cashSaved"] as! Double
+                    let unitedSaved = filters[8]["cashSaved"] as! Double
+                    let deltaSaved = filters[9]["cashSaved"] as! Double
+                    let southwestSaved = filters[10]["cashSaved"] as! Double
+                    let britishAirwaysSaved = filters[11]["cashSaved"] as! Double
+                    let uberSaved = filters[12]["cashSaved"] as! Double
+                    let appleSaved = filters[13]["cashSaved"] as! Double
+                        
+                    cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash, dining: diningSaved, travel: travelSaved, gas: gasSaved, shopping: shoppingSaved, entertainment: entertainmentSaved, groceries: groceriesSaved, amazon: amazonSaved, wholeFoods: wholeFoodsSaved, united: unitedSaved, delta: deltaSaved, southwest: southwestSaved, britishAirways: britishAirwaysSaved, uber: uberSaved, apple: appleSaved))
                     }
                 }
                 
@@ -171,6 +187,7 @@ class CardCollectionViewController: UICollectionViewController {
                 hVC.uid = self.uid
                 hVC.cards = self.cards
                 hVC.firstName = self.firstName
+                hVC.dateJoined = self.dateJoined
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -183,6 +200,8 @@ class CardCollectionViewController: UICollectionViewController {
                 aVC.uid = self.uid
                 aVC.cards = self.cards
                 aVC.firstName = self.firstName
+                aVC.dateJoined = self.dateJoined
+                aVC.allCards = self.allCards
             }
         case .profile:
             guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
@@ -196,6 +215,7 @@ class CardCollectionViewController: UICollectionViewController {
                 pVC.uid = self.uid
                 pVC.cards = self.cards
                 pVC.firstName = self.firstName
+                pVC.dateJoined = self.dateJoined
             }
         }
     }

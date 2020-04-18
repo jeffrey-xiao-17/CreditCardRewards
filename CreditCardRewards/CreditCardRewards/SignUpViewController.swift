@@ -38,8 +38,12 @@ class SignUpViewController: UIViewController {
                     self.errorLabel.text = "An error has ocurred in creating user"
                 } else {
                     let ref = Database.database().reference()
-                    
-                    ref.child("users/\(result!.user.uid)").setValue(["first_name": self.firstNameTextField.text!, "last_name": self.lastNameTextField.text!, "email": self.emailTextField.text!, "password": self.passwordTextField.text!, "uid": result!.user.uid, "cards": []]) { (error, ref) in
+                    let date = Date()
+                    let formatter = DateFormatter()
+                    formatter.timeStyle = .none
+                    formatter.dateStyle = .long
+                    let dateJoined: String = formatter.string(from: date)
+                    ref.child("users/\(result!.user.uid)").setValue(["first_name": self.firstNameTextField.text!, "last_name": self.lastNameTextField.text!, "email": self.emailTextField.text!, "password": self.passwordTextField.text!, "uid": result!.user.uid, "cards": [], "date_joined": dateJoined]) { (error, ref) in
                         if error != nil {
                             self.errorLabel.text = "Data couldn't be saved"
                         }
@@ -52,6 +56,14 @@ class SignUpViewController: UIViewController {
                                 self.errorLabel.text = "Data couldn't be saved"
                             }
                         }
+                        // TODO: UPDATE THIS TO ACCOUNT FOR TOTAL NUMBER OF FILTERS (0 to N-1)
+                        for filter in 0...13 {
+                            ref.child("users/\(result!.user.uid)/cards/\(index)/filters/\(filter)").setValue(["cashSaved": 0.0]) { (error, ref) in
+                                if error != nil {
+                                    self.errorLabel.text = "Data couldn't be saved"
+                                }
+                            }
+                        }
                     }
                     
                     let homeNav = self.storyboard?.instantiateViewController(identifier: "HomeNavController") as? UINavigationController
@@ -60,9 +72,12 @@ class SignUpViewController: UIViewController {
                         hVC.uid = result!.user.uid
                         let ref = Database.database().reference()
                         
+                        
+                        
                         ref.child("users/\(result!.user.uid)").observe(DataEventType.value) { (snapshot) in
                             if let items = snapshot.value as? NSDictionary, let name = items["first_name"] as? String {
                                 hVC.firstName = name
+                                hVC.dateJoined = dateJoined
                             }
                         }
                         

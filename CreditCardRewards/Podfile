@@ -10,6 +10,7 @@ target 'CreditCardRewards' do
   pod 'Kingfisher'
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'
+  pod 'Charts'
   
 
   target 'CreditCardRewardsTests' do

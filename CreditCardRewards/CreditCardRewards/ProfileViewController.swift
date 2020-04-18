@@ -13,6 +13,7 @@ import Firebase
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var dateJoinedLabel: UILabel!
     @IBOutlet weak var cardsRegisteredLabel: UILabel!
     @IBOutlet weak var profilePictureView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
@@ -24,6 +25,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     var cards: [NSDictionary] = []
     var ref: DatabaseReference!
     var firstName: String = ""
+    var dateJoined: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +37,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         ref.child("users/\(uid)").observe(DataEventType.value, with: { (snapshot) in
             if let info = snapshot.value as? NSDictionary, let firstName = info["first_name"] as? String, let lastName = info["last_name"] as? String {
                 self.profileNameLabel.text = "\(firstName) \(lastName)"
-                self.cardsRegisteredLabel.text = "Total Cards Registered: \(self.addedCards.count)"
+                self.cardsRegisteredLabel.text = "Total cards registered: \(self.addedCards.count)"
             }
         })
-        
+        dateJoinedLabel.text = "Date joined: \(dateJoined)"
     }
     
     @IBAction func clearDataButtonPressed(_ sender: Any) {
@@ -89,6 +91,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
                 ccVC.firstName = self.firstName
+                ccVC.dateJoined = self.dateJoined
             }
         case .home:
             guard let homeNavController = storyboard!.instantiateViewController(identifier: "HomeNavController") as? UINavigationController else { return }
@@ -98,6 +101,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 hVC.uid = self.uid
                 hVC.cards = self.cards
                 hVC.firstName = self.firstName
+                hVC.dateJoined = self.dateJoined
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -111,6 +115,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 aVC.uid = self.uid
                 aVC.cards = self.cards
                 aVC.firstName = self.firstName
+                aVC.dateJoined = self.dateJoined
             }
         case .profile:
             break

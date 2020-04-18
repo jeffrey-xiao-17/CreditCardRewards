@@ -12,7 +12,7 @@ import Firebase
 import Kingfisher
 
 protocol AddCashDelegate: class {
-    func didAdd(_ cash: Double)
+    func didAdd(_ cash: Double, _ filter: Int)
 }
 
 
@@ -34,6 +34,7 @@ class AddCashViewController: UIViewController {
     var travelPickerOn: Bool = false
     var shoppingPickerOn: Bool = false
     var groceriesPickerOn: Bool = false
+    var filterNum = 0
     
     weak var delegate: AddCashDelegate?
     
@@ -71,28 +72,34 @@ class AddCashViewController: UIViewController {
         case 0:
             filtersLabel.text = "Filter: Dining"
             segmentMultiplier = card.diningCBP
+            filterNum = 0
             adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 1:
             filtersLabel.text = "Filter: Travel"
             segmentMultiplier = card.travelCBP
+            filterNum = 1
             pickerViewTravel.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: false, travel: true)
         case 2:
             filtersLabel.text = "Filter: Gas"
             segmentMultiplier = card.gasCBP
+            filterNum = 2
             adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 3:
             filtersLabel.text = "Filter: Shopping"
             pickerView.selectRow(0, inComponent: 0, animated: false)
             segmentMultiplier = card.shoppingCBP
+            filterNum = 3
             adjustPickerBools(shopping: true, groceries: false, travel: false)
         case 4:
             filtersLabel.text = "Filter: Entertainment"
             segmentMultiplier = card.entertainmentCBP
+            filterNum = 4
             adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 5:
             filtersLabel.text = "Filter: Groceries"
             segmentMultiplier = card.groceriesCBP
+            filterNum = 5
             pickerViewGroceries.selectRow(0, inComponent: 0, animated: false)
             adjustPickerBools(shopping: false, groceries: true, travel: false)
         default:
@@ -109,7 +116,7 @@ class AddCashViewController: UIViewController {
         let cash: Double = createCash()
         
         if cash >= 0 {
-            self.delegate?.didAdd(cash)
+            self.delegate?.didAdd(cash, filterNum)
         }
     }
     
@@ -144,49 +151,62 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.shoppingCBP
+                filterNum = 3
             } else if row == 1 {    // target: amazon
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
                 pickerMultiplier = card.amazonCBP
+                filterNum = 6
             } else if row == 2 {    // target: whole foods
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 pickerMultiplier = card.wholeFoodsCBP
+                filterNum = 7
             } else if row == 3 {    // target: apple
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Apple" : "\(filtersLabel.text![..<endOfBase!]), Apple"
                 pickerMultiplier = card.appleCBP
+                filterNum = 13
             }
         } else if (pickerView.tag == 20) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.groceriesCBP
+                filterNum = 5
             } else if row == 1 {    // target: amazon
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
                 pickerMultiplier = card.amazonCBP
+                filterNum = 14
             } else if row == 2 {    // target: whole foods
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 pickerMultiplier = card.wholeFoodsCBP
+                filterNum = 15
             }
         } else if (pickerView.tag == 30) {
             if row == 0 {
                 filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.travelCBP
+                filterNum = 1
             } else if row == 1 {    // target: united
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), United" : "\(filtersLabel.text![..<endOfBase!]), United"
                 pickerMultiplier = card.unitedCBP
+                filterNum = 8
             } else if row == 2 {    // target: delta
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Delta" : "\(filtersLabel.text![..<endOfBase!]), Delta"
                 pickerMultiplier = card.deltaCBP
+                filterNum = 9
             } else if row == 3 {    // target: southwest
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Southwest" : "\(filtersLabel.text![..<endOfBase!]), Southwest"
                 pickerMultiplier = card.southwestCBP
+                filterNum = 10
             } else if row == 4 {    // target: british airways
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), British Airways" : "\(filtersLabel.text![..<endOfBase!]), British Airways"
                 pickerMultiplier = card.britishAirwaysCBP
+                filterNum = 11
             } else if row == 5 {    // target: uber
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Uber" : "\(filtersLabel.text![..<endOfBase!]), Uber"
                 pickerMultiplier = card.uberCBP
+                filterNum = 12
             }
-            cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
         }
+        cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

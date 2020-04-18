@@ -12,12 +12,85 @@ import Kingfisher
 import Firebase
 
 class DetailCardViewController: UIViewController, AddCashDelegate {
-    func didAdd(_ cash: Double) {
+    func didAdd(_ cash: Double, _ filter: Int) {
         dismiss(animated: true, completion: nil)
         let newVal = card!.cashSaved + cash
         card!.cashSaved = newVal
+        
+        switch filter {
+        case 0:
+            card!.filterSaved[0] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[0]])
+        case 1:
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[1]])
+        case 2:
+            card!.filterSaved[2] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[2]])
+        case 3:
+            card!.filterSaved[3] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[3]])
+        case 4:
+            card!.filterSaved[4] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[4]])
+        case 5:
+            card!.filterSaved[5] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[5]])
+        case 6:
+            card!.filterSaved[6] += cash
+            card!.filterSaved[3] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[6]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/3/cashSaved" : card!.filterSaved[3]])
+        case 7:
+            card!.filterSaved[7] += cash
+            card!.filterSaved[3] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[7]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/3/cashSaved" : card!.filterSaved[3]])
+        case 8:
+            card!.filterSaved[8] += cash
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[8]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/1/cashSaved" : card!.filterSaved[1]])
+        case 9:
+            card!.filterSaved[9] += cash
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[9]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/1/cashSaved" : card!.filterSaved[1]])
+        case 10:
+            card!.filterSaved[10] += cash
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[10]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/1/cashSaved" : card!.filterSaved[1]])
+        case 11:
+            card!.filterSaved[11] += cash
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[11]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/1/cashSaved" : card!.filterSaved[1]])
+        case 12:
+            card!.filterSaved[12] += cash
+            card!.filterSaved[1] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[12]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/1/cashSaved" : card!.filterSaved[1]])
+        case 13:
+            card!.filterSaved[13] += cash
+            card!.filterSaved[3] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/\(filter)/cashSaved" : card!.filterSaved[13]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/3/cashSaved" : card!.filterSaved[3]])
+        case 14:
+            card!.filterSaved[6] += cash
+            card!.filterSaved[5] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/6/cashSaved" : card!.filterSaved[6]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/5/cashSaved" : card!.filterSaved[5]])
+        case 15:
+            card!.filterSaved[7] += cash
+            card!.filterSaved[5] += cash
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/7/cashSaved" : card!.filterSaved[7]])
+            ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/filters/5/cashSaved" : card!.filterSaved[5]])
+        default:
+            break
+        }
+        
         ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/cashSaved" : newVal])
-
         cardCashSaved.text = "Cash saved: " + currencyFormatter.string(from: NSNumber(value: newVal))!
     }
     
@@ -96,7 +169,6 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
                     addVC.card = card!
                     addVC.delegate = self
                     navVC.modalPresentationStyle = .fullScreen
-                    //navVC.navigationBar.prefersLargeTitles = true
                 }
             }
         }
