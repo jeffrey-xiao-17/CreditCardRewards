@@ -46,7 +46,7 @@ class SignUpViewController: UIViewController {
                     }
                     
                     // TODO: UPDATE THIS TO ACCOUNT FOR TOTAL NUMBER OF CARDS (0 to N-1)
-                    for index in 0...5 {
+                    for index in 0...16 {
                         ref.child("users/\(result!.user.uid)/cards/\(index)").setValue(["added": false, "cashSaved": 0.0, "id": index + 1]) { (error, ref) in
                             if error != nil {
                                 self.errorLabel.text = "Data couldn't be saved"

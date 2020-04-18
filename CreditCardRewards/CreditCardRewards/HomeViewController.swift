@@ -12,7 +12,9 @@ import Kingfisher
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var pickerViewGroceries: UIPickerView!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var pickerViewTravel: UIPickerView!
     
     @IBOutlet weak var filtersLabel: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -26,8 +28,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var unaddedCards: [Card] = []
     var uid: String = ""
     var cards: [NSDictionary] = []
+    var travelPickerOn: Bool = false
+    var shoppingPickerOn: Bool = false
+    var groceriesPickerOn: Bool = false
     
-    static let shoppingAndGroceriesSource = ["All", "Amazon", "Whole Foods"]
+    
+    static let shoppingSource = ["All", "Amazon", "Whole Foods"]
+    static let groceriesSource = ["All", "Amazon", "Whole Foods", "Apple"]
+    static let travelSource = ["All, United, Delta, Southwest, British Airways, Uber"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +61,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         let groceries = tags[5]["cashBackPercent"] as! Double
                         let amazon = tags[6]["cashBackPercent"] as! Double
                         let wholeFoods = tags[7]["cashBackPercent"] as! Double
+                        let united = tags[8]["cashBackPercent"] as! Double
+                        let delta = tags[9]["cashBackPercent"] as! Double
+                        let southwest = tags[10]["cashBackPercent"] as! Double
+                        let britishAirways = tags[11]["cashBackPercent"] as! Double
+                        let uber = tags[12]["cashBackPercent"] as! Double
+                        let apple = tags[13]["cashBackPercent"] as! Double
                         
-                        cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, imageUrl: imageLink, added: added, id: id, cash: cash))
+                        cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash))
                     }
                 }
                 
@@ -93,37 +107,47 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     }
     
+    private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
+        shoppingPickerOn = shopping
+        travelPickerOn = travel
+        groceriesPickerOn = groceries
+        pickerView.isHidden = shoppingPickerOn
+        pickerViewGroceries.isHidden = groceriesPickerOn
+        pickerViewTravel.isHidden = travelPickerOn
+    }
+    
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             filtersLabel.text = "Filter: None"
-            pickerView.isHidden = true
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 1:
             filtersLabel.text = "Filter: Dining"
             sortToShowBest(tag: 1)
-            pickerView.isHidden = true
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 2:
             filtersLabel.text = "Filter: Travel"
             sortToShowBest(tag: 2)
-            pickerView.isHidden = true
+            pickerView.selectRow(0, inComponent: 0, animated: false)
+            adjustPickerBools(shopping: false, groceries: false, travel: true)
         case 3:
             filtersLabel.text = "Filter: Gas"
             sortToShowBest(tag: 3)
-            pickerView.isHidden = true
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 4:
             filtersLabel.text = "Filter: Shopping"
             sortToShowBest(tag: 4)
             pickerView.selectRow(0, inComponent: 0, animated: false)
-            pickerView.isHidden = false
+            adjustPickerBools(shopping: true, groceries: false, travel: false)
         case 5:
             filtersLabel.text = "Filter: Entertainment"
             sortToShowBest(tag: 5)
-            pickerView.isHidden = true
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 6:
             filtersLabel.text = "Filter: Groceries"
-            pickerView.isHidden = false
             sortToShowBest(tag: 6)
             pickerView.selectRow(0, inComponent: 0, animated: false)
+            adjustPickerBools(shopping: false, groceries: true, travel: false)
         default:
             filtersLabel.text = ""
         }
@@ -237,8 +261,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 return max(cardA.amazonCBP, cardA.groceriesCBP) >= max(cardB.amazonCBP, cardB.groceriesCBP)
             } else if tag == 9 {    // Shopping, Whole Foods
                 return max(cardA.wholeFoodsCBP, cardA.shoppingCBP) >= max(cardB.wholeFoodsCBP, cardB.shoppingCBP)
-            } else /* if tag == 10 */ {
+            } else if tag == 10 {   // Groceries, Whole Foods
                 return max(cardA.wholeFoodsCBP, cardA.groceriesCBP) >= max(cardB.wholeFoodsCBP, cardB.groceriesCBP)
+            } else if tag == 11 {   // Travel, United
+                return max(cardA.unitedCBP, cardA.travelCBP) >= max(cardB.unitedCBP, cardB.travelCBP)
+            } else if tag == 12 {   // Travel, Delta
+                return max(cardA.deltaCBP, cardA.travelCBP) >= max(cardB.deltaCBP, cardB.travelCBP)
+            } else if tag == 13 {   // Travel, Southwest
+                return max(cardA.southwestCBP, cardA.travelCBP) >= max(cardB.southwestCBP, cardB.travelCBP)
+            } else if tag == 14 {   // Travel, BritishAirways
+                return max(cardA.britishAirwaysCBP, cardA.travelCBP) >= max(cardB.britishAirwaysCBP, cardB.travelCBP)
+            } else if tag == 15 {   // Travel, Uber
+                return max(cardA.uberCBP, cardA.travelCBP) >= max(cardB.uberCBP, cardB.travelCBP)
+            } else {                // Shopping, Apple
+                return max(cardA.appleCBP, cardA.shoppingCBP) >= max(cardB.appleCBP, cardB.shoppingCBP)
             }
         }
     }
@@ -265,38 +301,61 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return HomeViewController.shoppingAndGroceriesSource.count
+        if (shoppingPickerOn) {
+            return HomeViewController.shoppingSource.count
+        } else if (groceriesPickerOn) {
+            return HomeViewController.groceriesSource.count
+        }
+        
+        return HomeViewController.travelSource.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
-        
-        if row == 0 {
-            filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
-            if (filtersLabel.text!.count == 16) {
-                // prev: shopping
+        if (shoppingPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 sortToShowBest(tag: 4)
-            } else {
-                // prev: groceries
-                sortToShowBest(tag: 6)
-            }
-        } else if row == 1 {    // target: amazon
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
-            if (filtersLabel.text!.count == 24) {
-                // prev: shopping
+            } else if row == 1 {    // target: amazon
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
                 sortToShowBest(tag: 7)
-            } else {
-                // prev: groceries
-                sortToShowBest(tag: 8)
-            }
-        } else if row == 2 {    // target: whole foods
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
-            if (filtersLabel.text!.count == 29) {
-                // prev: shopping
+            } else if row == 2 {    // target: whole foods
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 sortToShowBest(tag: 9)
-            } else {
-                // prev: groceries
+            } else if row == 3 {    // target: apple
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Apple" : "\(filtersLabel.text![..<endOfBase!]), Apple"
+                sortToShowBest(tag: 16)
+            }
+        } else if (groceriesPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
+                sortToShowBest(tag: 6)
+            } else if row == 1 {    // target: amazon
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
+                sortToShowBest(tag: 8)
+            } else if row == 2 {    // target: whole foods
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
                 sortToShowBest(tag: 10)
+            }
+        } else if (travelPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
+                sortToShowBest(tag: 2)
+            } else if row == 1 {    // target: united
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), United" : "\(filtersLabel.text![..<endOfBase!]), United"
+                sortToShowBest(tag: 11)
+            } else if row == 2 {    // target: delta
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Delta" : "\(filtersLabel.text![..<endOfBase!]), Delta"
+                sortToShowBest(tag: 12)
+            } else if row == 1 {    // target: southwest
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Southwest" : "\(filtersLabel.text![..<endOfBase!]), Southwest"
+                sortToShowBest(tag: 13)
+            } else if row == 2 {    // target: british airways
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), British Airways" : "\(filtersLabel.text![..<endOfBase!]), British Airways"
+                sortToShowBest(tag: 14)
+            } else if row == 1 {    // target: uber
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Uber" : "\(filtersLabel.text![..<endOfBase!]), Uber"
+                sortToShowBest(tag: 15)
             }
         }
         self.homeCollectionView.reloadData()
@@ -305,6 +364,11 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return HomeViewController.shoppingAndGroceriesSource[row]
+        if (shoppingPickerOn) {
+            return HomeViewController.shoppingSource[row]
+        } else if (groceriesPickerOn) {
+            return HomeViewController.groceriesSource[row]
+        }
+        return HomeViewController.travelSource[row]
     }
 }

@@ -18,6 +18,8 @@ protocol AddCashDelegate: class {
 
 class AddCashViewController: UIViewController {
     
+    @IBOutlet weak var pickerViewTravel: UIPickerView!
+    @IBOutlet weak var pickerViewGroceries: UIPickerView!
     var card: Card!
     @IBOutlet var cardView: UIImageView!
     @IBOutlet var cardName: UILabel!
@@ -29,6 +31,9 @@ class AddCashViewController: UIViewController {
     var ref: DatabaseReference!
     var segmentMultiplier: Double = 1.0
     var pickerMultiplier: Double = 1.0
+    var travelPickerOn: Bool = false
+    var shoppingPickerOn: Bool = false
+    var groceriesPickerOn: Bool = false
     
     weak var delegate: AddCashDelegate?
     
@@ -47,34 +52,45 @@ class AddCashViewController: UIViewController {
         ref = Database.database().reference()
     }
     
+    private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
+        shoppingPickerOn = shopping
+        travelPickerOn = travel
+        groceriesPickerOn = groceries
+        pickerView.isHidden = shoppingPickerOn
+        pickerViewGroceries.isHidden = groceriesPickerOn
+        pickerViewTravel.isHidden = travelPickerOn
+    }
+    
+    
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             filtersLabel.text = "Filter: Dining"
-            pickerView.isHidden = true
             segmentMultiplier = card.diningCBP
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 1:
             filtersLabel.text = "Filter: Travel"
-            pickerView.isHidden = true
             segmentMultiplier = card.travelCBP
+            pickerView.selectRow(0, inComponent: 0, animated: false)
+            adjustPickerBools(shopping: false, groceries: false, travel: true)
         case 2:
             filtersLabel.text = "Filter: Gas"
-            pickerView.isHidden = true
             segmentMultiplier = card.gasCBP
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 3:
             filtersLabel.text = "Filter: Shopping"
             pickerView.selectRow(0, inComponent: 0, animated: false)
-            pickerView.isHidden = false
             segmentMultiplier = card.shoppingCBP
+            adjustPickerBools(shopping: true, groceries: false, travel: false)
         case 4:
             filtersLabel.text = "Filter: Entertainment"
-            pickerView.isHidden = true
             segmentMultiplier = card.entertainmentCBP
+            adjustPickerBools(shopping: false, groceries: false, travel: false)
         case 5:
             filtersLabel.text = "Filter: Groceries"
-            pickerView.isHidden = false
             segmentMultiplier = card.groceriesCBP
             pickerView.selectRow(0, inComponent: 0, animated: false)
+            adjustPickerBools(shopping: false, groceries: true, travel: false)
         default:
             filtersLabel.text = ""
         }
@@ -109,42 +125,72 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return HomeViewController.shoppingAndGroceriesSource.count
+        if (shoppingPickerOn) {
+            return HomeViewController.shoppingSource.count
+        } else if (groceriesPickerOn) {
+            return HomeViewController.groceriesSource.count
+        }
+        
+        return HomeViewController.travelSource.count
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
-        
-        if row == 0 {
-            filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
-            
-            if (filtersLabel.text!.count == 16) {
+        if (shoppingPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.shoppingCBP
-            } else {
+            } else if row == 1 {    // target: amazon
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
+                pickerMultiplier = card.amazonCBP
+            } else if row == 2 {    // target: whole foods
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
+                pickerMultiplier = card.wholeFoodsCBP
+            } else if row == 3 {    // target: apple
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Apple" : "\(filtersLabel.text![..<endOfBase!]), Apple"
+                pickerMultiplier = card.appleCBP
+            }
+        } else if (groceriesPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
                 pickerMultiplier = card.groceriesCBP
+            } else if row == 1 {    // target: amazon
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
+                pickerMultiplier = card.amazonCBP
+            } else if row == 2 {    // target: whole foods
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
+                pickerMultiplier = card.wholeFoodsCBP
             }
-        } else if row == 1 {
-            if (endOfBase != nil && filtersLabel.text!.count == 24) {
-                pickerMultiplier = max(card.shoppingCBP, card.amazonCBP)
-            } else {
-                pickerMultiplier = max(card.groceriesCBP, card.amazonCBP)
+        } else if (travelPickerOn) {
+            if row == 0 {
+                filtersLabel.text = endOfBase == nil ? "\(filtersLabel.text!)" : "\(filtersLabel.text![..<endOfBase!])"
+                pickerMultiplier = card.travelCBP
+            } else if row == 1 {    // target: united
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), United" : "\(filtersLabel.text![..<endOfBase!]), United"
+                pickerMultiplier = card.unitedCBP
+            } else if row == 2 {    // target: delta
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Delta" : "\(filtersLabel.text![..<endOfBase!]), Delta"
+                pickerMultiplier = card.deltaCBP
+            } else if row == 1 {    // target: southwest
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Southwest" : "\(filtersLabel.text![..<endOfBase!]), Southwest"
+                pickerMultiplier = card.southwestCBP
+            } else if row == 2 {    // target: british airways
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), British Airways" : "\(filtersLabel.text![..<endOfBase!]), British Airways"
+                pickerMultiplier = card.britishAirwaysCBP
+            } else if row == 1 {    // target: uber
+                filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Uber" : "\(filtersLabel.text![..<endOfBase!]), Uber"
+                pickerMultiplier = card.uberCBP
             }
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Amazon" : "\(filtersLabel.text![..<endOfBase!]), Amazon"
-        } else if row == 2 {
-            if (endOfBase != nil && filtersLabel.text!.count == 29) {
-                pickerMultiplier = max(card.shoppingCBP, card.wholeFoodsCBP)
-            } else {
-                pickerMultiplier = max(card.groceriesCBP, card.wholeFoodsCBP)
-            }
-            filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Whole Foods" : "\(filtersLabel.text![..<endOfBase!]), Whole Foods"
         }
-        cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
     }
     
-    
-    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return HomeViewController.shoppingAndGroceriesSource[row]
+        if (shoppingPickerOn) {
+            return HomeViewController.shoppingSource[row]
+        } else if (groceriesPickerOn) {
+            return HomeViewController.groceriesSource[row]
+        }
+        return HomeViewController.travelSource[row]
     }
 }
 

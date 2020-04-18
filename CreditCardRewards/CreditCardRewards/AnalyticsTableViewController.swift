@@ -49,17 +49,23 @@ class AnalyticsTableViewController: UITableViewController {
                 var cardArray = [Card]()
                 for myCard in myCards {
                     if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
-                        
-                        let dining = tags[0]["cashBackPercent"] as! Double
-                        let travel = tags[1]["cashBackPercent"] as! Double
-                        let gas = tags[2]["cashBackPercent"] as! Double
-                        let shopping = tags[3]["cashBackPercent"] as! Double
-                        let entertainment = tags[4]["cashBackPercent"] as! Double
-                        let groceries = tags[5]["cashBackPercent"] as! Double
-                        let amazon = tags[6]["cashBackPercent"] as! Double
-                        let wholeFoods = tags[7]["cashBackPercent"] as! Double
-                        
-                        cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, imageUrl: imageLink, added: added, id: id, cash: cash))
+                    
+                    let dining = tags[0]["cashBackPercent"] as! Double
+                    let travel = tags[1]["cashBackPercent"] as! Double
+                    let gas = tags[2]["cashBackPercent"] as! Double
+                    let shopping = tags[3]["cashBackPercent"] as! Double
+                    let entertainment = tags[4]["cashBackPercent"] as! Double
+                    let groceries = tags[5]["cashBackPercent"] as! Double
+                    let amazon = tags[6]["cashBackPercent"] as! Double
+                    let wholeFoods = tags[7]["cashBackPercent"] as! Double
+                    let united = tags[8]["cashBackPercent"] as! Double
+                    let delta = tags[9]["cashBackPercent"] as! Double
+                    let southwest = tags[10]["cashBackPercent"] as! Double
+                    let britishAirways = tags[11]["cashBackPercent"] as! Double
+                    let uber = tags[12]["cashBackPercent"] as! Double
+                    let apple = tags[13]["cashBackPercent"] as! Double
+                    
+                    cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash))
                     }
                 }
                 
