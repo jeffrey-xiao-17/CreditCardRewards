@@ -12,15 +12,14 @@ import Kingfisher
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var noCardsAddedLabel: UILabel!
     @IBOutlet weak var pickerViewGroceries: UIPickerView!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     @IBOutlet weak var pickerViewTravel: UIPickerView!
-    
     @IBOutlet weak var filtersLabel: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
-    let transition = SlideTransition()
-    
     @IBOutlet weak var homeCollectionView: UICollectionView!
+    let transition = SlideTransition()
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
     var allCards: [Card] = []
@@ -31,6 +30,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var travelPickerOn: Bool = false
     var shoppingPickerOn: Bool = false
     var groceriesPickerOn: Bool = false
+    var firstName: String = ""
     
     
     static let shoppingSource = ["All", "Amazon", "Whole Foods", "Apple"]
@@ -87,6 +87,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         self.unaddedCards.append(card)
                     }
                 }
+                self.checkNoCardsLabel()
                 
                 DispatchQueue.main.async {
                     self.homeCollectionView.reloadData()
@@ -95,6 +96,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             self.homeCollectionView.reloadData()
         })
+        
         
         filtersLabel.text = "Filter: None"
         adjustPickerBools(shopping: false, groceries: false, travel: false)
@@ -109,6 +111,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         homeCollectionView.collectionViewLayout = layout
         self.homeCollectionView.reloadData()
 
+    }
+    private func checkNoCardsLabel() {
+        noCardsAddedLabel.isHidden = (addedCards.count != 0)
     }
     
     private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
@@ -187,6 +192,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.transitionToNew(menuType)
         }
         
+        menuViewController.firstName = self.firstName
         menuViewController.modalPresentationStyle = .overCurrentContext
         menuViewController.transitioningDelegate = self
         self.present(menuViewController, animated: true)
@@ -205,6 +211,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 ccVC.unaddedCards = self.unaddedCards
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
+                ccVC.firstName = self.firstName
             }
         case .home:
             break
@@ -217,6 +224,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 aVC.addedCards = self.addedCards
                 aVC.uid = self.uid
                 aVC.cards = self.cards
+                aVC.firstName = self.firstName
             }
         case .profile:
             guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
@@ -229,6 +237,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 pVC.unaddedCards = self.unaddedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards
+                pVC.firstName = self.firstName
             }
         }
     }

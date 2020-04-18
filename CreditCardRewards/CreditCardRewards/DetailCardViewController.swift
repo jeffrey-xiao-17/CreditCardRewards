@@ -55,6 +55,8 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         cardView.kf.setImage(with: card!.imageUrl)
         cardName.text = "\(card!.cardName)"
         cardRewards.text = "\(rewardsText)"
+        cardRewards.adjustsFontSizeToFitWidth = true
+        cardRewards.adjustsFontForContentSizeCategory = true
         addRemoveButton.setTitle(card!.added ? "Remove Card" : "Add Card", for: .normal)
         cardAddedLabel.text = card!.added ? "Added" : "Not Added"
         cardCashSaved.text = "Cash saved: " + currencyFormatter.string(from: NSNumber(value: card!.cashSaved))!
@@ -73,12 +75,18 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         
         rewardsText += "\u{2022} Dining: \(card!.diningCBP)\n"
         rewardsText += "\u{2022} Travel: \(card!.travelCBP)\n"
+        rewardsText += "\t\u{2022} United: \(card!.unitedCBP)\n"
+        rewardsText += "\t\u{2022} Delta: \(card!.deltaCBP)\n"
+        rewardsText += "\t\u{2022} Southwest: \(card!.southwestCBP)\n"
+        rewardsText += "\t\u{2022} British Airways: \(card!.britishAirwaysCBP)\n"
+        rewardsText += "\t\u{2022} Uber: \(card!.uberCBP)\n"
         rewardsText += "\u{2022} Gas: \(card!.gasCBP)\n"
         rewardsText += "\u{2022} Shopping: \(card!.shoppingCBP)\n"
+        rewardsText += "\t\u{2022} Amazon: \(card!.amazonCBP)\n"
+        rewardsText += "\t\u{2022} Whole Foods: \(card!.wholeFoodsCBP)\n"
+        rewardsText += "\t\u{2022} Apple: \(card!.appleCBP)\n"
         rewardsText += "\u{2022} Entertainment: \(card!.entertainmentCBP)\n"
         rewardsText += "\u{2022} Groceries: \(card!.groceriesCBP)\n"
-        rewardsText += "\u{2022} Amazon: \(card!.amazonCBP)\n"
-        rewardsText += "\u{2022} Whole Foods: \(card!.wholeFoodsCBP)\n"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -87,6 +95,8 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
                 if let addVC = navVC.topViewController as? AddCashViewController {
                     addVC.card = card!
                     addVC.delegate = self
+                    navVC.modalPresentationStyle = .fullScreen
+                    //navVC.navigationBar.prefersLargeTitles = true
                 }
             }
         }

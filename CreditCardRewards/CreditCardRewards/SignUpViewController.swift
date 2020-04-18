@@ -60,6 +60,12 @@ class SignUpViewController: UIViewController {
                         hVC.uid = result!.user.uid
                         let ref = Database.database().reference()
                         
+                        ref.child("users/\(result!.user.uid)").observe(DataEventType.value) { (snapshot) in
+                            if let items = snapshot.value as? NSDictionary, let name = items["first_name"] as? String {
+                                hVC.firstName = name
+                            }
+                        }
+                        
                         ref.child("cards").observe(DataEventType.value) { (snapshot) in
                             if let c = snapshot.value as? [NSDictionary] {
                                 hVC.cards = c

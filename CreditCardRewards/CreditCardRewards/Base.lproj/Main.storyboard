@@ -74,6 +74,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="bWy-yh-FTc"/>
                                 </connections>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cards found - add them in the &quot;Cards&quot; tab!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="S85-ni-OWO">
+                                <rect key="frame" x="108" y="205" width="209" height="542"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <pickerView tag="10" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxF-q1-Zar">
                                 <rect key="frame" x="0.0" y="249" width="414" height="88"/>
                                 <constraints>
@@ -126,6 +133,7 @@
                             <constraint firstItem="Fmt-tt-f37" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Zhb-2Q-8eP"/>
                             <constraint firstItem="gKD-Gf-NFV" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="c98-07-yZe"/>
                             <constraint firstItem="U5M-KV-tg5" firstAttribute="height" secondItem="zxF-q1-Zar" secondAttribute="height" id="d5p-8U-Cvd"/>
+                            <constraint firstItem="S85-ni-OWO" firstAttribute="top" secondItem="vdT-WP-d1o" secondAttribute="bottom" constant="3" id="iMh-Be-fNE"/>
                             <constraint firstItem="zxF-q1-Zar" firstAttribute="leading" secondItem="Fmt-tt-f37" secondAttribute="leading" id="kLN-iQ-PcW"/>
                             <constraint firstItem="U5M-KV-tg5" firstAttribute="top" secondItem="l3J-YG-IJX" secondAttribute="bottom" constant="8" id="kLe-nf-q2Z"/>
                             <constraint firstItem="c9W-2p-joc" firstAttribute="top" secondItem="U5M-KV-tg5" secondAttribute="bottom" constant="8" id="o7K-R2-MOe"/>
@@ -148,6 +156,7 @@
                         <outlet property="filterSegmentedControl" destination="l3J-YG-IJX" id="IFQ-iP-v7b"/>
                         <outlet property="filtersLabel" destination="vdT-WP-d1o" id="moF-oK-nDb"/>
                         <outlet property="homeCollectionView" destination="Fmt-tt-f37" id="znr-Xg-Idm"/>
+                        <outlet property="noCardsAddedLabel" destination="S85-ni-OWO" id="Rbi-hb-XEO"/>
                         <outlet property="pickerView" destination="zxF-q1-Zar" id="k4j-zb-nFX"/>
                         <outlet property="pickerViewGroceries" destination="gKD-Gf-NFV" id="xnk-6e-WvP"/>
                         <outlet property="pickerViewTravel" destination="U5M-KV-tg5" id="grX-iw-6Vg"/>
@@ -386,13 +395,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- Reward 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="50" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etR-it-Gm3">
-                                <rect key="frame" x="75" y="448.5" width="283" height="21.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <rect key="frame" x="75" y="448.5" width="283" height="19.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="AddRemoveButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wv-hi-bgM">
-                                <rect key="frame" x="56" y="775" width="302" height="46"/>
+                                <rect key="frame" x="56" y="781" width="302" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="Pci-Wp-iHH"/>
                                 </constraints>
@@ -409,7 +418,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cash Saved ($):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OG-Ee-2HM">
-                                <rect key="frame" x="56" y="698" width="302" height="27"/>
+                                <rect key="frame" x="56" y="478" width="302" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -417,15 +426,15 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="2OG-Ee-2HM" firstAttribute="top" secondItem="etR-it-Gm3" secondAttribute="bottom" constant="10" id="2L3-7P-u0f"/>
                             <constraint firstItem="4Ru-qF-r0e" firstAttribute="trailing" secondItem="etR-it-Gm3" secondAttribute="trailing" constant="56" id="2PI-17-Cfb"/>
                             <constraint firstItem="4Ru-qF-r0e" firstAttribute="trailing" secondItem="lYH-MI-SDz" secondAttribute="trailing" constant="56" id="34U-DC-hcl"/>
                             <constraint firstItem="WLE-Xi-Kqo" firstAttribute="top" secondItem="Rwn-z6-b49" secondAttribute="bottom" constant="8" id="6fe-8M-KBL"/>
                             <constraint firstItem="4Ru-qF-r0e" firstAttribute="trailing" secondItem="T4C-pl-Jt6" secondAttribute="trailing" constant="56" id="8Ac-qR-2uF"/>
                             <constraint firstItem="WLE-Xi-Kqo" firstAttribute="centerX" secondItem="Rwn-z6-b49" secondAttribute="centerX" id="9j7-yn-h77"/>
                             <constraint firstItem="4Ru-qF-r0e" firstAttribute="trailing" secondItem="Rwn-z6-b49" secondAttribute="trailing" constant="15" id="FqX-Af-fG1"/>
-                            <constraint firstItem="0Wv-hi-bgM" firstAttribute="top" secondItem="2OG-Ee-2HM" secondAttribute="bottom" constant="50" id="GeW-yJ-kFY"/>
                             <constraint firstItem="4Ru-qF-r0e" firstAttribute="trailing" secondItem="2OG-Ee-2HM" secondAttribute="trailing" constant="56" id="Iwo-V3-qCp"/>
-                            <constraint firstItem="4Ru-qF-r0e" firstAttribute="bottom" secondItem="0Wv-hi-bgM" secondAttribute="bottom" constant="41" id="N9O-6L-VUV"/>
+                            <constraint firstItem="4Ru-qF-r0e" firstAttribute="bottom" secondItem="0Wv-hi-bgM" secondAttribute="bottom" constant="35" id="N9O-6L-VUV"/>
                             <constraint firstItem="T4C-pl-Jt6" firstAttribute="leading" secondItem="4Ru-qF-r0e" secondAttribute="leading" constant="56" id="QLd-QP-xcj"/>
                             <constraint firstItem="Rwn-z6-b49" firstAttribute="leading" secondItem="4Ru-qF-r0e" secondAttribute="leading" constant="15" id="RLE-qw-x1p"/>
                             <constraint firstItem="lYH-MI-SDz" firstAttribute="top" secondItem="4Ru-qF-r0e" secondAttribute="top" id="SRg-AJ-5Qr"/>
@@ -776,6 +785,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Xy4-Hm-uIH"/>
+                    <connections>
+                        <outlet property="profileNameLabel" destination="w8f-2r-Lwo" id="H7V-4G-cEg"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ccv-XB-P3x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -902,8 +914,8 @@
                                     <constraint firstItem="myd-Qb-KDF" firstAttribute="height" secondItem="Mu8-Vp-9Ii" secondAttribute="height" id="K6m-IK-vWe"/>
                                 </constraints>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="creditcard" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ons-UO-DaV">
-                                <rect key="frame" x="87" y="330" width="240" height="236"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appstore" translatesAutoresizingMaskIntoConstraints="NO" id="ons-UO-DaV">
+                                <rect key="frame" x="87" y="328" width="240" height="240"/>
                                 <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
                         </subviews>
@@ -1137,6 +1149,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HVE-PR-1Ol">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="IYb-ve-2rL" kind="relationship" relationship="rootViewController" id="Gzp-Mg-8EN"/>
                     </connections>
@@ -1184,10 +1199,10 @@
     </scenes>
     <resources>
         <image name="airplane" catalog="system" width="64" height="56"/>
+        <image name="appstore" width="1024" height="1024"/>
         <image name="bag.fill" catalog="system" width="64" height="64"/>
         <image name="car.fill" catalog="system" width="64" height="46"/>
         <image name="cart.fill" catalog="system" width="64" height="50"/>
-        <image name="creditcard" catalog="system" width="64" height="44"/>
         <image name="film" catalog="system" width="64" height="46"/>
         <image name="multiply.circle.fill" catalog="system" width="64" height="60"/>
         <image name="person.3.fill" catalog="system" width="71" height="34"/>

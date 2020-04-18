@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     var uid: String = ""
     var cards: [NSDictionary] = []
     var ref: DatabaseReference!
+    var firstName: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +69,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.transitionToNew(menuType)
         }
         
+        menuViewController.firstName = self.firstName
         menuViewController.modalPresentationStyle = .overCurrentContext
         menuViewController.transitioningDelegate = self
         self.present(menuViewController, animated: true)
@@ -86,6 +88,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 ccVC.unaddedCards = self.unaddedCards
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
+                ccVC.firstName = self.firstName
             }
         case .home:
             guard let homeNavController = storyboard!.instantiateViewController(identifier: "HomeNavController") as? UINavigationController else { return }
@@ -94,6 +97,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             if let hVC = homeNavController.topViewController as? HomeViewController {
                 hVC.uid = self.uid
                 hVC.cards = self.cards
+                hVC.firstName = self.firstName
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -106,6 +110,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 aVC.addedCards = self.addedCards
                 aVC.uid = self.uid
                 aVC.cards = self.cards
+                aVC.firstName = self.firstName
             }
         case .profile:
             break

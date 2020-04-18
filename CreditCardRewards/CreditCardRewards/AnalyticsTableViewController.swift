@@ -30,6 +30,7 @@ class AnalyticsTableViewController: UITableViewController {
     var addedCards: [Card] = []
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
+    var firstName: String = ""
     let transition = SlideTransition()
     var uid: String = "invalid-override"
     var cards: [NSDictionary] = []
@@ -150,6 +151,7 @@ class AnalyticsTableViewController: UITableViewController {
             self.transitionToNew(menuType)
         }
 
+        menuViewController.firstName = self.firstName
         menuViewController.modalPresentationStyle = .overCurrentContext
         menuViewController.transitioningDelegate = self
         present(menuViewController, animated: true)
@@ -164,6 +166,7 @@ class AnalyticsTableViewController: UITableViewController {
             if let ccVC = collectionNavController.topViewController as? CardCollectionViewController {
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
+                ccVC.firstName = self.firstName
             }
             
             self.present(collectionNavController, animated: true, completion: nil)
@@ -174,6 +177,7 @@ class AnalyticsTableViewController: UITableViewController {
             if let hVC = homeNavController.topViewController as? HomeViewController {
                 hVC.uid = self.uid
                 hVC.cards = self.cards
+                hVC.firstName = self.firstName
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -188,6 +192,7 @@ class AnalyticsTableViewController: UITableViewController {
                 pVC.addedCards = self.addedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards
+                pVC.firstName = self.firstName
             }
         }
     }

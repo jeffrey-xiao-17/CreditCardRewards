@@ -52,7 +52,7 @@ class AddCashViewController: UIViewController {
         filtersLabel.text = "Filter: Dining"
         segmentMultiplier = card.diningCBP
         cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
-        pickerView.isHidden = true
+        adjustPickerBools(shopping: false, groceries: false, travel: false)
         ref = Database.database().reference()
     }
     
@@ -175,16 +175,17 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
             } else if row == 2 {    // target: delta
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Delta" : "\(filtersLabel.text![..<endOfBase!]), Delta"
                 pickerMultiplier = card.deltaCBP
-            } else if row == 1 {    // target: southwest
+            } else if row == 3 {    // target: southwest
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Southwest" : "\(filtersLabel.text![..<endOfBase!]), Southwest"
                 pickerMultiplier = card.southwestCBP
-            } else if row == 2 {    // target: british airways
+            } else if row == 4 {    // target: british airways
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), British Airways" : "\(filtersLabel.text![..<endOfBase!]), British Airways"
                 pickerMultiplier = card.britishAirwaysCBP
-            } else if row == 1 {    // target: uber
+            } else if row == 5 {    // target: uber
                 filtersLabel.text! = endOfBase == nil ? "\(filtersLabel.text!), Uber" : "\(filtersLabel.text![..<endOfBase!]), Uber"
                 pickerMultiplier = card.uberCBP
             }
+            cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
         }
     }
     

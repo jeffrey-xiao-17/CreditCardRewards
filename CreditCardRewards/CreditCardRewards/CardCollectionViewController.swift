@@ -22,6 +22,7 @@ class CardCollectionViewController: UICollectionViewController {
     let transition = SlideTransition()
     var uid: String = "invalid-override"
     var cards: [NSDictionary] = []
+    var firstName: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,6 +153,7 @@ class CardCollectionViewController: UICollectionViewController {
             self.transitionToNew(menuType)
         }
         
+        menuViewController.firstName = self.firstName
         menuViewController.modalPresentationStyle = .overCurrentContext
         menuViewController.transitioningDelegate = self
         self.present(menuViewController, animated: true)
@@ -168,6 +170,7 @@ class CardCollectionViewController: UICollectionViewController {
             if let hVC = homeNavController.topViewController as? HomeViewController {
                 hVC.uid = self.uid
                 hVC.cards = self.cards
+                hVC.firstName = self.firstName
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -179,6 +182,7 @@ class CardCollectionViewController: UICollectionViewController {
             if let aVC = analyticsNavController.topViewController as? AnalyticsTableViewController {
                 aVC.uid = self.uid
                 aVC.cards = self.cards
+                aVC.firstName = self.firstName
             }
         case .profile:
             guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
@@ -191,6 +195,7 @@ class CardCollectionViewController: UICollectionViewController {
                 pVC.unaddedCards = self.unaddedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards
+                pVC.firstName = self.firstName
             }
         }
     }

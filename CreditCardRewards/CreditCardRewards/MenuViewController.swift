@@ -18,11 +18,13 @@ enum MenuType: Int {
 class MenuViewController: UITableViewController {
     
     
-    
+    @IBOutlet weak var profileNameLabel: UILabel!
     var didTapMenuType: ((MenuType) -> Void)?
+    var firstName: String = "Profile"
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileNameLabel.text = firstName
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
