@@ -107,7 +107,6 @@ class AnalyticsTableViewController: UITableViewController {
             cell.cardCashBackLabel.text = currencyFormatter.string(from: NSNumber(value: addedCards[indexPath.row - 1].cashSaved))
             showOrNoShowTableViewCell(b: false)
         } else {
-//            cell.selectionStyle = .none
             var sum: Double = 0.00
             
             for card in addedCards {
@@ -152,7 +151,6 @@ class AnalyticsTableViewController: UITableViewController {
                 ccVC.cards = self.cards
                 ccVC.firstName = self.firstName
                 ccVC.dateJoined = self.dateJoined
-                ccVC.allCards = self.allCards
             }
             
             self.present(collectionNavController, animated: true, completion: nil)
@@ -165,7 +163,6 @@ class AnalyticsTableViewController: UITableViewController {
                 hVC.cards = self.cards
                 hVC.firstName = self.firstName
                 hVC.dateJoined = self.dateJoined
-                hVC.allCards = self.allCards
             }
             
             self.present(homeNavController, animated: true, completion: nil)
@@ -182,7 +179,6 @@ class AnalyticsTableViewController: UITableViewController {
                 pVC.cards = self.cards
                 pVC.firstName = self.firstName
                 pVC.dateJoined = self.dateJoined
-                pVC.allCards = self.allCards
             }
         }
     }

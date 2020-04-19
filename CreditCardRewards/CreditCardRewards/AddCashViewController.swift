@@ -20,7 +20,6 @@ class AddCashViewController: UIViewController {
     
     @IBOutlet weak var pickerViewTravel: UIPickerView!
     @IBOutlet weak var pickerViewGroceries: UIPickerView!
-    var card: Card!
     @IBOutlet var cardView: UIImageView!
     @IBOutlet var cardName: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
@@ -28,6 +27,8 @@ class AddCashViewController: UIViewController {
     @IBOutlet weak var inputAmountTextField: UITextField!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
     @IBOutlet weak var cashBackPercentageLabel: UILabel!
+    
+    var card: Card!
     var ref: DatabaseReference!
     var segmentMultiplier: Double = 1.0
     var pickerMultiplier: Double = 1.0
@@ -49,7 +50,7 @@ class AddCashViewController: UIViewController {
         pickerViewGroceries.dataSource = self
         pickerViewTravel.delegate = self
         pickerViewTravel.dataSource = self
-        inputAmountTextField.delegate = self
+        //inputAmountTextField.delegate = self
         filtersLabel.text = "Filter: Dining"
         segmentMultiplier = card.diningCBP
         cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
@@ -57,6 +58,7 @@ class AddCashViewController: UIViewController {
         ref = Database.database().reference()
     }
     
+    // Controls which picker views are shown
     private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
         shoppingPickerOn = shopping
         travelPickerOn = travel
@@ -66,7 +68,7 @@ class AddCashViewController: UIViewController {
         pickerViewTravel.isHidden = !travelPickerOn
     }
     
-    
+    // Adjusts the filter segments and keeps track of multiplier
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -121,7 +123,7 @@ class AddCashViewController: UIViewController {
     }
     
     func createCash() -> Double {
-        if inputAmountTextField.text!.isEmpty {
+        if inputAmountTextField.text!.isEmpty || inputAmountTextField.text!.doubleValue == nil {
             return -1
         }
         
@@ -219,12 +221,12 @@ extension AddCashViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-extension AddCashViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let _ = string.rangeOfCharacter(from: NSCharacterSet.decimalDigits) {
-            return true
-        } else {
-            return false
-        }
-    }
+extension String {
+     struct NumFormatter {
+         static let instance = NumberFormatter()
+     }
+
+     var doubleValue: Double? {
+         return NumFormatter.instance.number(from: self)?.doubleValue
+     }
 }

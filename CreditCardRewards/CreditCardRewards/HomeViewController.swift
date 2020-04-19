@@ -211,9 +211,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.present(collectionNavController, animated: true, completion: nil)
             
             if let ccVC = collectionNavController.topViewController as? CardCollectionViewController {
-                ccVC.allCards = self.allCards
-                ccVC.addedCards = self.addedCards
-                ccVC.unaddedCards = self.unaddedCards
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
                 ccVC.firstName = self.firstName
@@ -227,8 +224,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.present(analyticsNavController, animated: true, completion: nil)
             
             if let aVC = analyticsNavController.topViewController as? AnalyticsTableViewController {
-                aVC.addedCards = self.addedCards
-                aVC.allCards = self.allCards
                 aVC.uid = self.uid
                 aVC.cards = self.cards
                 aVC.firstName = self.firstName
@@ -240,9 +235,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.present(profileNavController, animated: true, completion: nil)
             
             if let pVC = profileNavController.topViewController as? ProfileViewController {
-                pVC.allCards = self.allCards
                 pVC.addedCards = self.addedCards
-                pVC.unaddedCards = self.unaddedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards
                 pVC.firstName = self.firstName

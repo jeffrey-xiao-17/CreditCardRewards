@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseAuth
-import Kingfisher
 import Firebase
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -88,9 +87,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.present(collectionNavController, animated: true, completion: nil)
             
             if let ccVC = collectionNavController.topViewController as? CardCollectionViewController {
-                ccVC.allCards = self.allCards
-                ccVC.addedCards = self.addedCards
-                ccVC.unaddedCards = self.unaddedCards
                 ccVC.uid = self.uid
                 ccVC.cards = self.cards
                 ccVC.firstName = self.firstName
@@ -114,7 +110,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.present(analyticsNavController, animated: true, completion: nil)
             
             if let aVC = analyticsNavController.topViewController as? AnalyticsTableViewController {
-                aVC.addedCards = self.addedCards
                 aVC.uid = self.uid
                 aVC.cards = self.cards
                 aVC.firstName = self.firstName

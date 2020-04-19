@@ -98,7 +98,6 @@ class CardCollectionViewController: UICollectionViewController {
         } else {
             performSegue(withIdentifier: "CardViewSegue", sender: unaddedCards[indexPath.item])
         }
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -111,7 +110,6 @@ class CardCollectionViewController: UICollectionViewController {
         }
         
         return sectionHeader
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -165,7 +163,6 @@ class CardCollectionViewController: UICollectionViewController {
                 aVC.cards = self.cards
                 aVC.firstName = self.firstName
                 aVC.dateJoined = self.dateJoined
-                aVC.allCards = self.allCards
             }
         case .profile:
             guard let profileNavController = storyboard!.instantiateViewController(identifier: "ProfileNavController") as? UINavigationController else { return }
@@ -173,9 +170,7 @@ class CardCollectionViewController: UICollectionViewController {
             self.present(profileNavController, animated: true, completion: nil)
             
             if let pVC = profileNavController.topViewController as? ProfileViewController {
-                pVC.allCards = self.allCards
                 pVC.addedCards = self.addedCards
-                pVC.unaddedCards = self.unaddedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards
                 pVC.firstName = self.firstName
@@ -184,8 +179,7 @@ class CardCollectionViewController: UICollectionViewController {
         }
     }
     
-    static func createCard(cardsTranscribed: [NSDictionary], myCards: [NSDictionary]) -> [Card] {
-        
+    static func createCard(cardsTranscribed: [NSDictionary], myCards: [NSDictionary]) -> [Card] { 
         var cardArray = [Card]()
         for myCard in myCards {
             if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let filters = myCard["filters"] as? [NSDictionary], let name = cardsTranscribed[id - 1]["name"] as? String, let tags = cardsTranscribed[id - 1]["tags"] as? [NSDictionary], let imageLink = cardsTranscribed[id - 1]["imageUrl"] as? String {
@@ -223,7 +217,6 @@ class CardCollectionViewController: UICollectionViewController {
                 cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash, dining: diningSaved, travel: travelSaved, gas: gasSaved, shopping: shoppingSaved, entertainment: entertainmentSaved, groceries: groceriesSaved, amazon: amazonSaved, wholeFoods: wholeFoodsSaved, united: unitedSaved, delta: deltaSaved, southwest: southwestSaved, britishAirways: britishAirwaysSaved, uber: uberSaved, apple: appleSaved))
             }
         }
-        
         return cardArray
     }
 }

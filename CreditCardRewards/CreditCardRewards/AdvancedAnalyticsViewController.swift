@@ -8,7 +8,6 @@
 
 import UIKit
 import Firebase
-import Kingfisher
 import Charts
 
 class AdvancedAnalyticsViewController: UIViewController {
