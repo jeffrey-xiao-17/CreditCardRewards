@@ -37,6 +37,11 @@ class LogInViewController: UIViewController {
                     self.errorLabel.text = "An error has occurred while logging in."
                     self.errorLabel.isHidden = false
                 } else {
+                    
+                    UserDefaults.standard.set(true, forKey: LoggedInSettings.UserIsLoggedIn.rawValue)
+                    UserDefaults.standard.set("\(result!.user.uid)", forKey: LoggedInSettings.LoggedInUserUID.rawValue)
+                    UserDefaults.standard.synchronize()
+                    
                     let homeNav = self.storyboard?.instantiateViewController(identifier: "HomeNavController") as? UINavigationController
                     
                     if let hVC = homeNav?.topViewController as? HomeViewController {

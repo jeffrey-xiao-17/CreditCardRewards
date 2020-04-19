@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  CreditCardRewards
 //
 //  Created by Jeffrey Xiao on 4/12/20.
@@ -12,6 +12,7 @@ import Kingfisher
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    // Relevant user interation items
     @IBOutlet weak var noCardsAddedLabel: UILabel!
     @IBOutlet weak var pickerViewGroceries: UIPickerView!
     @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
@@ -19,6 +20,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var filtersLabel: UILabel!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var homeCollectionView: UICollectionView!
+    
     let transition = SlideTransition()
     var ref: DatabaseReference!
     var refHandle: DatabaseHandle!
@@ -33,7 +35,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var firstName: String = ""
     var dateJoined: String = ""
     
-    
+    // Arrays used for the three picker views
     static let shoppingSource = ["All", "Amazon", "Whole Foods", "Apple"]
     static let groceriesSource = ["All", "Amazon", "Whole Foods"]
     static let travelSource = ["All", "United", "Delta", "Southwest", "British Airways", "Uber"]
@@ -48,49 +50,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         pickerViewGroceries.dataSource = self
         pickerViewTravel.delegate = self
         pickerViewTravel.dataSource = self
+        
 
         ref = Database.database().reference()
 
+        // Fetching most up-to-date information about cards
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
-                var cardArray = [Card]()
-                for myCard in myCards {
- 
-                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let filters = myCard["filters"] as? [NSDictionary], let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
-                    
-                        let dining = tags[0]["cashBackPercent"] as! Double
-                        let travel = tags[1]["cashBackPercent"] as! Double
-                        let gas = tags[2]["cashBackPercent"] as! Double
-                        let shopping = tags[3]["cashBackPercent"] as! Double
-                        let entertainment = tags[4]["cashBackPercent"] as! Double
-                        let groceries = tags[5]["cashBackPercent"] as! Double
-                        let amazon = tags[6]["cashBackPercent"] as! Double
-                        let wholeFoods = tags[7]["cashBackPercent"] as! Double
-                        let united = tags[8]["cashBackPercent"] as! Double
-                        let delta = tags[9]["cashBackPercent"] as! Double
-                        let southwest = tags[10]["cashBackPercent"] as! Double
-                        let britishAirways = tags[11]["cashBackPercent"] as! Double
-                        let uber = tags[12]["cashBackPercent"] as! Double
-                        let apple = tags[13]["cashBackPercent"] as! Double
-                            
-                        let diningSaved = filters[0]["cashSaved"] as! Double
-                        let travelSaved = filters[1]["cashSaved"] as! Double
-                        let gasSaved = filters[2]["cashSaved"] as! Double
-                        let shoppingSaved = filters[3]["cashSaved"] as! Double
-                        let entertainmentSaved = filters[4]["cashSaved"] as! Double
-                        let groceriesSaved = filters[5]["cashSaved"] as! Double
-                        let amazonSaved = filters[6]["cashSaved"] as! Double
-                        let wholeFoodsSaved = filters[7]["cashSaved"] as! Double
-                        let unitedSaved = filters[8]["cashSaved"] as! Double
-                        let deltaSaved = filters[9]["cashSaved"] as! Double
-                        let southwestSaved = filters[10]["cashSaved"] as! Double
-                        let britishAirwaysSaved = filters[11]["cashSaved"] as! Double
-                        let uberSaved = filters[12]["cashSaved"] as! Double
-                        let appleSaved = filters[13]["cashSaved"] as! Double
-                            
-                        cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash, dining: diningSaved, travel: travelSaved, gas: gasSaved, shopping: shoppingSaved, entertainment: entertainmentSaved, groceries: groceriesSaved, amazon: amazonSaved, wholeFoods: wholeFoodsSaved, united: unitedSaved, delta: deltaSaved, southwest: southwestSaved, britishAirways: britishAirwaysSaved, uber: uberSaved, apple: appleSaved))
-                    }
-                }
+                let cardArray = CardCollectionViewController.createCard(cardsTranscribed: self.cards, myCards: myCards)
                 
                 self.allCards = cardArray
                 self.addedCards = []
@@ -109,11 +76,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.homeCollectionView.reloadData()
                 }
             }
-            
-            self.homeCollectionView.reloadData()
         })
         
-        
+        // Layout touches
+        noCardsAddedLabel.isHidden = true
         filtersLabel.text = "Filter: None"
         adjustPickerBools(shopping: false, groceries: false, travel: false)
         let itemSize = UIScreen.main.bounds.width/2 - 2
@@ -125,13 +91,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         layout.minimumLineSpacing = 2
         
         homeCollectionView.collectionViewLayout = layout
-        self.homeCollectionView.reloadData()
-
     }
+    
+    // Helper function to adjust "No Cards" label
     private func checkNoCardsLabel() {
         noCardsAddedLabel.isHidden = (addedCards.count != 0)
     }
     
+    // Helper function to automatically show/hide the relevant pickers
     private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
         shoppingPickerOn = shopping
         travelPickerOn = travel
@@ -141,6 +108,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         pickerViewTravel.isHidden = !travelPickerOn
     }
     
+    // Controls the filter segment and determines which picker (if any) to show
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -179,27 +147,48 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.homeCollectionView.reloadData()
     }
     
+    // Helper function to sort the cards in order of most relevant/most useful
+    private func sortToShowBest(tag: Int) {
+        addedCards.sort { (cardA, cardB) -> Bool in
+            if tag == 1 {
+                return cardA.diningCBP >= cardB.diningCBP
+            } else if tag == 2 {
+                return cardA.travelCBP >= cardB.travelCBP
+            } else if tag == 3 {
+                return cardA.gasCBP >= cardB.gasCBP
+            } else if tag == 4 {
+                return cardA.shoppingCBP >= cardB.shoppingCBP
+            } else if tag == 5 {
+                return cardA.entertainmentCBP >= cardB.entertainmentCBP
+            } else if tag == 6 {
+                return cardA.groceriesCBP >= cardB.groceriesCBP
+            } else if tag == 7 {    // Shopping, Amazon
+                return max(cardA.amazonCBP, cardA.shoppingCBP) >= max(cardB.amazonCBP, cardB.shoppingCBP)
+            } else if tag == 8 {    // Groceries, Amazon
+                return max(cardA.amazonCBP, cardA.groceriesCBP) >= max(cardB.amazonCBP, cardB.groceriesCBP)
+            } else if tag == 9 {    // Shopping, Whole Foods
+                return max(cardA.wholeFoodsCBP, cardA.shoppingCBP) >= max(cardB.wholeFoodsCBP, cardB.shoppingCBP)
+            } else if tag == 10 {   // Groceries, Whole Foods
+                return max(cardA.wholeFoodsCBP, cardA.groceriesCBP) >= max(cardB.wholeFoodsCBP, cardB.groceriesCBP)
+            } else if tag == 11 {   // Travel, United
+                return max(cardA.unitedCBP, cardA.travelCBP) >= max(cardB.unitedCBP, cardB.travelCBP)
+            } else if tag == 12 {   // Travel, Delta
+                return max(cardA.deltaCBP, cardA.travelCBP) >= max(cardB.deltaCBP, cardB.travelCBP)
+            } else if tag == 13 {   // Travel, Southwest
+                return max(cardA.southwestCBP, cardA.travelCBP) >= max(cardB.southwestCBP, cardB.travelCBP)
+            } else if tag == 14 {   // Travel, BritishAirways
+                return max(cardA.britishAirwaysCBP, cardA.travelCBP) >= max(cardB.britishAirwaysCBP, cardB.travelCBP)
+            } else if tag == 15 {   // Travel, Uber
+                return max(cardA.uberCBP, cardA.travelCBP) >= max(cardB.uberCBP, cardB.travelCBP)
+            } else {                // Shopping, Apple
+                return max(cardA.appleCBP, cardA.shoppingCBP) >= max(cardB.appleCBP, cardB.shoppingCBP)
+            }
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return addedCards.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CardCollectionViewCell
-        
-        cell.cardImageView.kf.setImage(with: addedCards[indexPath.item].imageUrl)
-        cell.cardLabel.text = addedCards[indexPath.item].cardName
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "CardViewSegue", sender: allCards[addedCards[indexPath.item].id - 1])
-    }
-    
     
     @IBAction func didTapMenu(_ sender: UIBarButtonItem) {
         guard let menuViewController = storyboard?.instantiateViewController(identifier: "MenuViewController") as? MenuViewController else { return }
@@ -262,6 +251,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    // MARK: - Collection View methods
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return addedCards.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CardCollectionViewCell
+        
+        cell.cardImageView.kf.setImage(with: addedCards[indexPath.item].imageUrl)
+        cell.cardLabel.text = addedCards[indexPath.item].cardName
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "CardViewSegue", sender: allCards[addedCards[indexPath.item].id - 1])
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "CardViewSegue") {
             if let currentCard = sender as? Card {
@@ -273,47 +281,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
-    
-    private func sortToShowBest(tag: Int) {
-        addedCards.sort { (cardA, cardB) -> Bool in
-            if tag == 1 {
-                return cardA.diningCBP >= cardB.diningCBP
-            } else if tag == 2 {
-                return cardA.travelCBP >= cardB.travelCBP
-            } else if tag == 3 {
-                return cardA.gasCBP >= cardB.gasCBP
-            } else if tag == 4 {
-                return cardA.shoppingCBP >= cardB.shoppingCBP
-            } else if tag == 5 {
-                return cardA.entertainmentCBP >= cardB.entertainmentCBP
-            } else if tag == 6 {
-                return cardA.groceriesCBP >= cardB.groceriesCBP
-            } else if tag == 7 {    // Shopping, Amazon
-                return max(cardA.amazonCBP, cardA.shoppingCBP) >= max(cardB.amazonCBP, cardB.shoppingCBP)
-            } else if tag == 8 {    // Groceries, Amazon
-                return max(cardA.amazonCBP, cardA.groceriesCBP) >= max(cardB.amazonCBP, cardB.groceriesCBP)
-            } else if tag == 9 {    // Shopping, Whole Foods
-                return max(cardA.wholeFoodsCBP, cardA.shoppingCBP) >= max(cardB.wholeFoodsCBP, cardB.shoppingCBP)
-            } else if tag == 10 {   // Groceries, Whole Foods
-                return max(cardA.wholeFoodsCBP, cardA.groceriesCBP) >= max(cardB.wholeFoodsCBP, cardB.groceriesCBP)
-            } else if tag == 11 {   // Travel, United
-                return max(cardA.unitedCBP, cardA.travelCBP) >= max(cardB.unitedCBP, cardB.travelCBP)
-            } else if tag == 12 {   // Travel, Delta
-                return max(cardA.deltaCBP, cardA.travelCBP) >= max(cardB.deltaCBP, cardB.travelCBP)
-            } else if tag == 13 {   // Travel, Southwest
-                return max(cardA.southwestCBP, cardA.travelCBP) >= max(cardB.southwestCBP, cardB.travelCBP)
-            } else if tag == 14 {   // Travel, BritishAirways
-                return max(cardA.britishAirwaysCBP, cardA.travelCBP) >= max(cardB.britishAirwaysCBP, cardB.travelCBP)
-            } else if tag == 15 {   // Travel, Uber
-                return max(cardA.uberCBP, cardA.travelCBP) >= max(cardB.uberCBP, cardB.travelCBP)
-            } else {                // Shopping, Apple
-                return max(cardA.appleCBP, cardA.shoppingCBP) >= max(cardB.appleCBP, cardB.shoppingCBP)
-            }
-        }
-    }
 }
 
-
+// Menu Transition delegate
 extension HomeViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -327,6 +297,7 @@ extension HomeViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+// Picker View Delegate
 extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -343,6 +314,7 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         return HomeViewController.travelSource.count
     }
     
+    // Determines which row is selected to determine optimal sort
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
         if (pickerView.tag == 10) {
@@ -393,8 +365,6 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         }
         self.homeCollectionView.reloadData()
     }
-    
-    
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if (pickerView.tag == 10) {

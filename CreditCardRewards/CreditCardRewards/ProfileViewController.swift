@@ -55,6 +55,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             let firstNav = self.storyboard!.instantiateViewController(identifier: "FirstNavController") as? UINavigationController
             firstNav!.modalPresentationStyle = .fullScreen
             self.present(firstNav!, animated: true, completion: nil)
+            UserDefaults.standard.set(false, forKey: LoggedInSettings.UserIsLoggedIn.rawValue)
+            UserDefaults.standard.set("N/A", forKey: LoggedInSettings.LoggedInUserUID.rawValue)
+            UserDefaults.standard.synchronize()
         } catch let error {
             print("\(error)")
         }

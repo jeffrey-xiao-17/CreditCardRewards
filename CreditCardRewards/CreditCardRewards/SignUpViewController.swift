@@ -37,6 +37,10 @@ class SignUpViewController: UIViewController {
                 if error != nil {
                     self.errorLabel.text = "An error has ocurred in creating user"
                 } else {
+                    UserDefaults.standard.set(true, forKey: LoggedInSettings.UserIsLoggedIn.rawValue)
+                    UserDefaults.standard.set("\(result!.user.uid)", forKey: LoggedInSettings.LoggedInUserUID.rawValue)
+                    UserDefaults.standard.synchronize()
+                    
                     let ref = Database.database().reference()
                     let date = Date()
                     let formatter = DateFormatter()

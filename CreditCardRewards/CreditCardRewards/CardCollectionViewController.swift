@@ -32,43 +32,7 @@ class CardCollectionViewController: UICollectionViewController {
     
         refHandle = ref.child("users/\(uid)/cards").observe(DataEventType.value, with: { (snapshot) in
             if let myCards = snapshot.value as? [NSDictionary] {
-                var cardArray = [Card]()
-                for myCard in myCards {
-                    if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let filters = myCard["filters"] as? [NSDictionary], let name = self.cards[id - 1]["name"] as? String, let tags = self.cards[id - 1]["tags"] as? [NSDictionary], let imageLink = self.cards[id - 1]["imageUrl"] as? String {
-                    
-                    let dining = tags[0]["cashBackPercent"] as! Double
-                    let travel = tags[1]["cashBackPercent"] as! Double
-                    let gas = tags[2]["cashBackPercent"] as! Double
-                    let shopping = tags[3]["cashBackPercent"] as! Double
-                    let entertainment = tags[4]["cashBackPercent"] as! Double
-                    let groceries = tags[5]["cashBackPercent"] as! Double
-                    let amazon = tags[6]["cashBackPercent"] as! Double
-                    let wholeFoods = tags[7]["cashBackPercent"] as! Double
-                    let united = tags[8]["cashBackPercent"] as! Double
-                    let delta = tags[9]["cashBackPercent"] as! Double
-                    let southwest = tags[10]["cashBackPercent"] as! Double
-                    let britishAirways = tags[11]["cashBackPercent"] as! Double
-                    let uber = tags[12]["cashBackPercent"] as! Double
-                    let apple = tags[13]["cashBackPercent"] as! Double
-                        
-                    let diningSaved = filters[0]["cashSaved"] as! Double
-                    let travelSaved = filters[1]["cashSaved"] as! Double
-                    let gasSaved = filters[2]["cashSaved"] as! Double
-                    let shoppingSaved = filters[3]["cashSaved"] as! Double
-                    let entertainmentSaved = filters[4]["cashSaved"] as! Double
-                    let groceriesSaved = filters[5]["cashSaved"] as! Double
-                    let amazonSaved = filters[6]["cashSaved"] as! Double
-                    let wholeFoodsSaved = filters[7]["cashSaved"] as! Double
-                    let unitedSaved = filters[8]["cashSaved"] as! Double
-                    let deltaSaved = filters[9]["cashSaved"] as! Double
-                    let southwestSaved = filters[10]["cashSaved"] as! Double
-                    let britishAirwaysSaved = filters[11]["cashSaved"] as! Double
-                    let uberSaved = filters[12]["cashSaved"] as! Double
-                    let appleSaved = filters[13]["cashSaved"] as! Double
-                        
-                    cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash, dining: diningSaved, travel: travelSaved, gas: gasSaved, shopping: shoppingSaved, entertainment: entertainmentSaved, groceries: groceriesSaved, amazon: amazonSaved, wholeFoods: wholeFoodsSaved, united: unitedSaved, delta: deltaSaved, southwest: southwestSaved, britishAirways: britishAirwaysSaved, uber: uberSaved, apple: appleSaved))
-                    }
-                }
+                let cardArray = CardCollectionViewController.createCard(cardsTranscribed: self.cards, myCards: myCards)
                 
                 self.allCards = cardArray
                 self.addedCards = []
@@ -100,6 +64,7 @@ class CardCollectionViewController: UICollectionViewController {
         collectionView.collectionViewLayout = layout
     }
     
+    // MARK: - Collection View Methods
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
@@ -136,18 +101,6 @@ class CardCollectionViewController: UICollectionViewController {
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "CardViewSegue") {
-            if let currentCard = sender as? Card {
-                if let cardVC = segue.destination as? DetailCardViewController {
-                    cardVC.card = currentCard
-                    cardVC.ref = self.ref
-                    cardVC.uid = self.uid
-                }
-            }
-        }
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sectionHeaderView, for: indexPath) as! SectionHeaderView
         
@@ -161,6 +114,17 @@ class CardCollectionViewController: UICollectionViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "CardViewSegue") {
+            if let currentCard = sender as? Card {
+                if let cardVC = segue.destination as? DetailCardViewController {
+                    cardVC.card = currentCard
+                    cardVC.ref = self.ref
+                    cardVC.uid = self.uid
+                }
+            }
+        }
+    }
     
     @IBAction func didTapMenu(_ sender: UIBarButtonItem) {
         guard let menuViewController = storyboard?.instantiateViewController(identifier: "MenuViewController") as? MenuViewController else { return }
@@ -219,6 +183,49 @@ class CardCollectionViewController: UICollectionViewController {
             }
         }
     }
+    
+    static func createCard(cardsTranscribed: [NSDictionary], myCards: [NSDictionary]) -> [Card] {
+        
+        var cardArray = [Card]()
+        for myCard in myCards {
+            if let added = myCard["added"] as? Bool, let cash = myCard["cashSaved"] as? Double, let id = myCard["id"] as? Int, let filters = myCard["filters"] as? [NSDictionary], let name = cardsTranscribed[id - 1]["name"] as? String, let tags = cardsTranscribed[id - 1]["tags"] as? [NSDictionary], let imageLink = cardsTranscribed[id - 1]["imageUrl"] as? String {
+                
+                let dining = tags[0]["cashBackPercent"] as! Double
+                let travel = tags[1]["cashBackPercent"] as! Double
+                let gas = tags[2]["cashBackPercent"] as! Double
+                let shopping = tags[3]["cashBackPercent"] as! Double
+                let entertainment = tags[4]["cashBackPercent"] as! Double
+                let groceries = tags[5]["cashBackPercent"] as! Double
+                let amazon = tags[6]["cashBackPercent"] as! Double
+                let wholeFoods = tags[7]["cashBackPercent"] as! Double
+                let united = tags[8]["cashBackPercent"] as! Double
+                let delta = tags[9]["cashBackPercent"] as! Double
+                let southwest = tags[10]["cashBackPercent"] as! Double
+                let britishAirways = tags[11]["cashBackPercent"] as! Double
+                let uber = tags[12]["cashBackPercent"] as! Double
+                let apple = tags[13]["cashBackPercent"] as! Double
+                    
+                let diningSaved = filters[0]["cashSaved"] as! Double
+                let travelSaved = filters[1]["cashSaved"] as! Double
+                let gasSaved = filters[2]["cashSaved"] as! Double
+                let shoppingSaved = filters[3]["cashSaved"] as! Double
+                let entertainmentSaved = filters[4]["cashSaved"] as! Double
+                let groceriesSaved = filters[5]["cashSaved"] as! Double
+                let amazonSaved = filters[6]["cashSaved"] as! Double
+                let wholeFoodsSaved = filters[7]["cashSaved"] as! Double
+                let unitedSaved = filters[8]["cashSaved"] as! Double
+                let deltaSaved = filters[9]["cashSaved"] as! Double
+                let southwestSaved = filters[10]["cashSaved"] as! Double
+                let britishAirwaysSaved = filters[11]["cashSaved"] as! Double
+                let uberSaved = filters[12]["cashSaved"] as! Double
+                let appleSaved = filters[13]["cashSaved"] as! Double
+                
+                cardArray.append(Card(cardName: name, diningCBP: dining, travelCBP: travel, gasCBP: gas, shoppingCBP: shopping, entertainmentCBP: entertainment, groceriesCBP: groceries, amazonCBP: amazon, wholeFoodsCBP: wholeFoods, unitedCBP: united, deltaCBP: delta, southwestCBP: southwest, britishAirwaysCBP: britishAirways, uberCBP: uber, appleCBP: apple, imageUrl: imageLink, added: added, id: id, cash: cash, dining: diningSaved, travel: travelSaved, gas: gasSaved, shopping: shoppingSaved, entertainment: entertainmentSaved, groceries: groceriesSaved, amazon: amazonSaved, wholeFoods: wholeFoodsSaved, united: unitedSaved, delta: deltaSaved, southwest: southwestSaved, britishAirways: britishAirwaysSaved, uber: uberSaved, apple: appleSaved))
+            }
+        }
+        
+        return cardArray
+    }
 }
 
 extension CardCollectionViewController: UIViewControllerTransitioningDelegate {
@@ -233,3 +240,4 @@ extension CardCollectionViewController: UIViewControllerTransitioningDelegate {
         return transition
     }
 }
+
