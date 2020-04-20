@@ -82,7 +82,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         noCardsAddedLabel.isHidden = true
         filtersLabel.text = "Filter: None"
         adjustPickerBools(shopping: false, groceries: false, travel: false)
-        let itemSize = UIScreen.main.bounds.width/2 - 2
+        let itemSize = UIScreen.main.bounds.width/2 - 3
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 1, bottom: 20, right: 1)
@@ -235,6 +235,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.present(profileNavController, animated: true, completion: nil)
             
             if let pVC = profileNavController.topViewController as? ProfileViewController {
+                pVC.allCards = self.allCards
                 pVC.addedCards = self.addedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards

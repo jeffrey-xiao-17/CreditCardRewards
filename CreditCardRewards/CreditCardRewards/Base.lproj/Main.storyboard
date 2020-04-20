@@ -52,13 +52,13 @@
                                             </subviews>
                                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="leading" secondItem="uMM-m0-Fuh" secondAttribute="leading" constant="6" id="06f-mK-uCy"/>
-                                                <constraint firstAttribute="trailing" secondItem="LCN-iq-zg6" secondAttribute="trailing" constant="6" id="TQC-Dx-SqG"/>
-                                                <constraint firstAttribute="trailing" secondItem="F8M-Sx-tIv" secondAttribute="trailing" constant="2" id="XXW-l9-RsU"/>
-                                                <constraint firstItem="F8M-Sx-tIv" firstAttribute="top" secondItem="LCN-iq-zg6" secondAttribute="bottom" constant="4" id="c2h-i7-cjW"/>
-                                                <constraint firstItem="F8M-Sx-tIv" firstAttribute="leading" secondItem="uMM-m0-Fuh" secondAttribute="leading" constant="2" id="mb2-kG-Con"/>
-                                                <constraint firstAttribute="bottom" secondItem="F8M-Sx-tIv" secondAttribute="bottom" constant="5" id="qfw-oj-lv7"/>
-                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="top" secondItem="uMM-m0-Fuh" secondAttribute="top" constant="3" id="wKw-5V-wDe"/>
+                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="top" secondItem="uMM-m0-Fuh" secondAttribute="top" constant="3" id="JMm-SO-xep"/>
+                                                <constraint firstItem="F8M-Sx-tIv" firstAttribute="leading" secondItem="uMM-m0-Fuh" secondAttribute="leading" constant="2" id="PZ7-Vz-4N6"/>
+                                                <constraint firstItem="F8M-Sx-tIv" firstAttribute="top" secondItem="LCN-iq-zg6" secondAttribute="bottom" constant="4" id="Yas-81-tPJ"/>
+                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="centerX" secondItem="uMM-m0-Fuh" secondAttribute="centerX" id="Zag-Jh-jgw"/>
+                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="centerX" secondItem="F8M-Sx-tIv" secondAttribute="centerX" id="e8g-sy-Akz"/>
+                                                <constraint firstItem="LCN-iq-zg6" firstAttribute="leading" secondItem="uMM-m0-Fuh" secondAttribute="leading" constant="6" id="yeS-Md-Dh5"/>
+                                                <constraint firstAttribute="bottom" secondItem="F8M-Sx-tIv" secondAttribute="bottom" constant="5" id="zhd-Vj-WuM"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -465,20 +465,20 @@
                                     <constraint firstAttribute="height" constant="181" id="2m2-Nd-h36"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rwn-z6-b49">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Card Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rwn-z6-b49">
                                 <rect key="frame" x="15" y="345" width="384" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cash Back (%):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4C-pl-Jt6">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Cash Back (%):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4C-pl-Jt6">
                                 <rect key="frame" x="56" y="414" width="302" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- Reward 1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="50" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="etR-it-Gm3">
-                                <rect key="frame" x="75" y="448.5" width="283" height="19.5"/>
+                                <rect key="frame" x="75" y="448.5" width="283" height="285.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -500,8 +500,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cash Saved ($):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OG-Ee-2HM">
-                                <rect key="frame" x="56" y="478" width="302" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Cash Saved ($):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OG-Ee-2HM">
+                                <rect key="frame" x="56" y="744" width="302" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -522,6 +522,7 @@
                             <constraint firstItem="Rwn-z6-b49" firstAttribute="leading" secondItem="4Ru-qF-r0e" secondAttribute="leading" constant="15" id="RLE-qw-x1p"/>
                             <constraint firstItem="lYH-MI-SDz" firstAttribute="top" secondItem="4Ru-qF-r0e" secondAttribute="top" id="SRg-AJ-5Qr"/>
                             <constraint firstItem="WLE-Xi-Kqo" firstAttribute="leading" secondItem="4Ru-qF-r0e" secondAttribute="leading" constant="159" id="V4N-IX-SsU"/>
+                            <constraint firstItem="0Wv-hi-bgM" firstAttribute="top" secondItem="2OG-Ee-2HM" secondAttribute="bottom" constant="10" id="VeA-rd-xY8"/>
                             <constraint firstItem="etR-it-Gm3" firstAttribute="trailing" secondItem="0Wv-hi-bgM" secondAttribute="trailing" id="acE-BO-OIb"/>
                             <constraint firstItem="T4C-pl-Jt6" firstAttribute="top" secondItem="Rwn-z6-b49" secondAttribute="bottom" constant="40" id="jDi-tY-PSn"/>
                             <constraint firstItem="Rwn-z6-b49" firstAttribute="top" secondItem="lYH-MI-SDz" secondAttribute="bottom" constant="24" id="lzK-UF-yRh"/>
@@ -607,7 +608,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter numerical value" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Dl-9y-TCj">
                                 <rect key="frame" x="97" y="687" width="301.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cash Back (%): __" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SJ4-5y-jHt">
                                 <rect key="frame" x="139" y="648" width="136" height="21"/>
@@ -1038,12 +1039,12 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Po-gd-COG">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="name"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gtb-R6-hfu">
                                         <rect key="frame" x="0.0" y="54" width="354" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" textContentType="name"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" textContentType="name"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zt2-dH-lqt">
                                         <rect key="frame" x="0.0" y="108" width="354" height="34"/>
@@ -1292,6 +1293,6 @@
         <image name="person.crop.circle.fill" catalog="system" width="64" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ROA-zr-j12"/>
+        <segue reference="IBn-VL-aPr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -16,7 +16,7 @@ protocol AddCashDelegate: class {
 }
 
 
-class AddCashViewController: UIViewController {
+class AddCashViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var pickerViewTravel: UIPickerView!
     @IBOutlet weak var pickerViewGroceries: UIPickerView!
@@ -50,12 +50,21 @@ class AddCashViewController: UIViewController {
         pickerViewGroceries.dataSource = self
         pickerViewTravel.delegate = self
         pickerViewTravel.dataSource = self
-        //inputAmountTextField.delegate = self
+        inputAmountTextField.delegate = self
+        self.inputAmountTextField.keyboardType = UIKeyboardType.decimalPad
+
         filtersLabel.text = "Filter: Dining"
         segmentMultiplier = card.diningCBP
         cashBackPercentageLabel.text = "Cash Back (%): \(max(segmentMultiplier, pickerMultiplier))"
         adjustPickerBools(shopping: false, groceries: false, travel: false)
         ref = Database.database().reference()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // Controls which picker views are shown
@@ -128,6 +137,23 @@ class AddCashViewController: UIViewController {
         }
         
         return (inputAmountTextField.text! as NSString).doubleValue * max(segmentMultiplier, pickerMultiplier) / 100
+    }
+    
+    @objc func keyboardWillChange(notification: Notification) {
+        
+        guard let keyboardDimension = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        
+        
+        if notification.name == UIResponder.keyboardWillShowNotification || notification.name == UIResponder.keyboardWillChangeFrameNotification {
+            view.frame.origin.y = -keyboardDimension.height + 100
+        } else {
+            view.frame.origin.y = 0
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
 

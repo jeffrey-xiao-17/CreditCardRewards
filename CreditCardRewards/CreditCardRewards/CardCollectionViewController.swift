@@ -170,6 +170,7 @@ class CardCollectionViewController: UICollectionViewController {
             self.present(profileNavController, animated: true, completion: nil)
             
             if let pVC = profileNavController.topViewController as? ProfileViewController {
+                pVC.allCards = self.allCards
                 pVC.addedCards = self.addedCards
                 pVC.uid = self.uid
                 pVC.cards = self.cards

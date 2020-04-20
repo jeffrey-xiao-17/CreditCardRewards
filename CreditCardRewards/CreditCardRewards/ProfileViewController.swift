@@ -19,7 +19,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     let transition = SlideTransition()
     var allCards: [Card] = []
     var addedCards: [Card] = []
-    var unaddedCards: [Card] = []
     var uid: String = ""
     var cards: [NSDictionary] = []
     var ref: DatabaseReference!
@@ -43,8 +42,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func clearDataButtonPressed(_ sender: Any) {
+        print("CLEAR BUTTON PRESSED")
+        print(allCards.count)
         for card in allCards {
+            print(card)
             ref.updateChildValues(["users/\(self.uid)/cards/\(card.id - 1)/cashSaved" : 0.0])
+            for int in 0 ... 13 {
+                ref.updateChildValues(["users/\(self.uid)/cards/\(card.id - 1)/filters/\(int)/cashSaved" : 0.0])
+            }
         }
     }
     
@@ -119,7 +124,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             break
         }
     }
-    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {

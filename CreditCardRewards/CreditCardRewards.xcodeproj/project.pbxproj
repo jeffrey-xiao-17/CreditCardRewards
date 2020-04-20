@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		515D5E82CA2A99491167101D /* libPods-CreditCardRewards.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F33FA098F54952E93A7ABA /* libPods-CreditCardRewards.a */; };
+		64C7CFDB90597921AD31361D /* libPods-CreditCardRewards-CreditCardRewardsUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B9E0BB6D4195C16F792E5FE /* libPods-CreditCardRewards-CreditCardRewardsUITests.a */; };
 		8846DCF42447F44600FFC5E8 /* AddCashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8846DCF32447F44600FFC5E8 /* AddCashViewController.swift */; };
 		8856D6EB24450FDA000C4CD1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856D6EA24450FDA000C4CD1 /* Card.swift */; };
 		8856D6ED24452239000C4CD1 /* DetailCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8856D6EC24452239000C4CD1 /* DetailCardViewController.swift */; };
@@ -30,9 +32,7 @@
 		88E69A632443DD2800F2716E /* CreditCardRewardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E69A622443DD2800F2716E /* CreditCardRewardsTests.swift */; };
 		88E69A6E2443DD2800F2716E /* CreditCardRewardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88E69A6D2443DD2800F2716E /* CreditCardRewardsUITests.swift */; };
 		88E69A7C2443DE5B00F2716E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88E69A7B2443DE5B00F2716E /* GoogleService-Info.plist */; };
-		9A725EF33D249C8CE0346AC9 /* Pods_CreditCardRewards_CreditCardRewardsUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE797BE4BC7CB38DA7CB3FD /* Pods_CreditCardRewards_CreditCardRewardsUITests.framework */; };
-		C3D78E8D136C000C3F9C1CE6 /* Pods_CreditCardRewardsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F27ED96B781A33EF09EB496 /* Pods_CreditCardRewardsTests.framework */; };
-		F352CD65EF5DE682A380FAA8 /* Pods_CreditCardRewards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA25D067585D3B58A04A5877 /* Pods_CreditCardRewards.framework */; };
+		CDFF6B8059E72BBF956F552A /* libPods-CreditCardRewardsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5895F1BBCE575B2A7D4DD6E /* libPods-CreditCardRewardsTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,9 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1FE797BE4BC7CB38DA7CB3FD /* Pods_CreditCardRewards_CreditCardRewardsUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreditCardRewards_CreditCardRewardsUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		26415577C6DAD866DC093E55 /* Pods-CreditCardRewardsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewardsTests.debug.xcconfig"; path = "Target Support Files/Pods-CreditCardRewardsTests/Pods-CreditCardRewardsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4C4384DA1AC4AA9C0AC033C2 /* Pods-CreditCardRewards-CreditCardRewardsUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewards-CreditCardRewardsUITests.debug.xcconfig"; path = "Target Support Files/Pods-CreditCardRewards-CreditCardRewardsUITests/Pods-CreditCardRewards-CreditCardRewardsUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B9E0BB6D4195C16F792E5FE /* libPods-CreditCardRewards-CreditCardRewardsUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CreditCardRewards-CreditCardRewardsUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		768D80004BA218E4A9F510CD /* Pods-CreditCardRewards-CreditCardRewardsUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewards-CreditCardRewardsUITests.release.xcconfig"; path = "Target Support Files/Pods-CreditCardRewards-CreditCardRewardsUITests/Pods-CreditCardRewards-CreditCardRewardsUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8846DCF32447F44600FFC5E8 /* AddCashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCashViewController.swift; sourceTree = "<group>"; };
 		8856D6EA24450FDA000C4CD1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
@@ -86,11 +86,11 @@
 		88E69A6D2443DD2800F2716E /* CreditCardRewardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditCardRewardsUITests.swift; sourceTree = "<group>"; };
 		88E69A6F2443DD2800F2716E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88E69A7B2443DE5B00F2716E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8F27ED96B781A33EF09EB496 /* Pods_CreditCardRewardsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreditCardRewardsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5F33FA098F54952E93A7ABA /* libPods-CreditCardRewards.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CreditCardRewards.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D764B67316E15875AAC3AFD7 /* Pods-CreditCardRewardsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewardsTests.release.xcconfig"; path = "Target Support Files/Pods-CreditCardRewardsTests/Pods-CreditCardRewardsTests.release.xcconfig"; sourceTree = "<group>"; };
-		DA25D067585D3B58A04A5877 /* Pods_CreditCardRewards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CreditCardRewards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1284C10F82AA5874A892381 /* Pods-CreditCardRewards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewards.release.xcconfig"; path = "Target Support Files/Pods-CreditCardRewards/Pods-CreditCardRewards.release.xcconfig"; sourceTree = "<group>"; };
 		EF3B595DAD58E04D50AE23CD /* Pods-CreditCardRewards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CreditCardRewards.debug.xcconfig"; path = "Target Support Files/Pods-CreditCardRewards/Pods-CreditCardRewards.debug.xcconfig"; sourceTree = "<group>"; };
+		F5895F1BBCE575B2A7D4DD6E /* libPods-CreditCardRewardsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CreditCardRewardsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F352CD65EF5DE682A380FAA8 /* Pods_CreditCardRewards.framework in Frameworks */,
+				515D5E82CA2A99491167101D /* libPods-CreditCardRewards.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3D78E8D136C000C3F9C1CE6 /* Pods_CreditCardRewardsTests.framework in Frameworks */,
+				CDFF6B8059E72BBF956F552A /* libPods-CreditCardRewardsTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A725EF33D249C8CE0346AC9 /* Pods_CreditCardRewards_CreditCardRewardsUITests.framework in Frameworks */,
+				64C7CFDB90597921AD31361D /* libPods-CreditCardRewards-CreditCardRewardsUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,9 +206,9 @@
 		E8B2DD099CDB4D0700A36D0F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				DA25D067585D3B58A04A5877 /* Pods_CreditCardRewards.framework */,
-				1FE797BE4BC7CB38DA7CB3FD /* Pods_CreditCardRewards_CreditCardRewardsUITests.framework */,
-				8F27ED96B781A33EF09EB496 /* Pods_CreditCardRewardsTests.framework */,
+				C5F33FA098F54952E93A7ABA /* libPods-CreditCardRewards.a */,
+				5B9E0BB6D4195C16F792E5FE /* libPods-CreditCardRewards-CreditCardRewardsUITests.a */,
+				F5895F1BBCE575B2A7D4DD6E /* libPods-CreditCardRewardsTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -224,7 +224,6 @@
 				88E69A442443DD2700F2716E /* Sources */,
 				88E69A452443DD2700F2716E /* Frameworks */,
 				88E69A462443DD2700F2716E /* Resources */,
-				31171C611E23C54EA9BB0298 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -262,7 +261,6 @@
 				88E69A652443DD2800F2716E /* Sources */,
 				88E69A662443DD2800F2716E /* Frameworks */,
 				88E69A672443DD2800F2716E /* Resources */,
-				C4D3A5A62B1215F4D051F7D8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -346,23 +344,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31171C611E23C54EA9BB0298 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards/Pods-CreditCardRewards-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards/Pods-CreditCardRewards-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards/Pods-CreditCardRewards-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		75F9760205D0842E427FAB03 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -405,23 +386,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C4D3A5A62B1215F4D051F7D8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards-CreditCardRewardsUITests/Pods-CreditCardRewards-CreditCardRewardsUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards-CreditCardRewardsUITests/Pods-CreditCardRewards-CreditCardRewardsUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CreditCardRewards-CreditCardRewardsUITests/Pods-CreditCardRewards-CreditCardRewardsUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCFAEC93165AA4C2C48E4B1B /* [CP] Check Pods Manifest.lock */ = {

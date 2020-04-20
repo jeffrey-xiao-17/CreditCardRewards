@@ -1,4 +1,4 @@
-framework module Pods_CreditCardRewards_CreditCardRewardsUITests {
+module Pods_CreditCardRewards_CreditCardRewardsUITests {
   umbrella header "Pods-CreditCardRewards-CreditCardRewardsUITests-umbrella.h"
 
   export *
