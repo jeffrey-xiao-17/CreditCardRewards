@@ -90,6 +90,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         layout.minimumInteritemSpacing = 2
         layout.minimumLineSpacing = 2
         
+        
+        // Swipe Gesture setup for menu
         homeCollectionView.collectionViewLayout = layout
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
@@ -107,12 +109,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    // Helper function to adjust "No Cards" label
+    /// Helper function to adjust "No Cards" label
     private func checkNoCardsLabel() {
         noCardsAddedLabel.isHidden = (addedCards.count != 0)
     }
     
-    // Helper function to automatically show/hide the relevant pickers
+    /// Helper function to automatically show/hide the relevant pickers
     private func adjustPickerBools(shopping: Bool, groceries: Bool, travel: Bool) {
         shoppingPickerOn = shopping
         travelPickerOn = travel
@@ -122,7 +124,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         pickerViewTravel.isHidden = !travelPickerOn
     }
     
-    // Controls the filter segment and determines which picker (if any) to show
+    /// Controls the filter segment and determines which picker (if any) to show
     @IBAction func filterSegmentedControlSwitch(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
@@ -158,10 +160,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         default:
             filtersLabel.text = ""
         }
+        
         self.homeCollectionView.reloadData()
     }
     
-    // Helper function to sort the cards in order of most relevant/most useful
+    /// Helper function to sort the cards in order of most relevant/most useful
     private func sortToShowBest(tag: Int) {
         addedCards.sort { (cardA, cardB) -> Bool in
             if tag == 1 {
@@ -204,6 +207,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         super.didReceiveMemoryWarning()
     }
     
+    /// Handles user interation when the menu button is "tapped"
     @IBAction func didTapMenu(_ sender: UIBarButtonItem) {
         guard let menuViewController = storyboard?.instantiateViewController(identifier: "MenuViewController") as? MenuViewController else { return }
         
@@ -217,6 +221,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.present(menuViewController, animated: true)
     }
 
+    /// Works in conjunction with didTapMenu to transition to the new view
     func transitionToNew(_ menuType: MenuType) {
         switch menuType {
         case .cards:
@@ -322,7 +327,7 @@ extension HomeViewController:  UIPickerViewDelegate, UIPickerViewDataSource {
         return HomeViewController.travelSource.count
     }
     
-    // Determines which row is selected to determine optimal sort
+    /// Determines which row is selected to determine optimal sort
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let endOfBase = filtersLabel.text!.firstIndex(of: ",")
         if (pickerView.tag == 10) {

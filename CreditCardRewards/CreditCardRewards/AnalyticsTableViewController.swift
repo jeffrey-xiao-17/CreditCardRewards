@@ -67,7 +67,6 @@ class AnalyticsTableViewController: UITableViewController {
                     self.tableView.reloadData()
                 }
             }
-            self.tableView.reloadData()
         })
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
