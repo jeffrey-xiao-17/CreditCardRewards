@@ -1,7 +1,7 @@
 # CreditCardRewards
  CIS 195 Final Project
  
- PennKey: jxiao23
+ #### PennKey: jxiao23
  
  CreditCardRewards is an app that allows users to determine which of their cards are best suited/will earn them the most cash back in a given situation.  For example, some cards give more cash back when spent on dining, while others are specific towards purchases on Amazon or at Whole Foods.
  
