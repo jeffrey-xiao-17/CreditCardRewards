@@ -39,11 +39,23 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             }
         })
         dateJoinedLabel.text = "Date joined: \(dateJoined)"
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                didTapMenu(UIBarButtonItem())
+            default:
+                break
+            }
+        }
     }
     
     @IBAction func clearDataButtonPressed(_ sender: Any) {
-        print("CLEAR BUTTON PRESSED")
-        print(allCards.count)
         for card in allCards {
             print(card)
             ref.updateChildValues(["users/\(self.uid)/cards/\(card.id - 1)/cashSaved" : 0.0])

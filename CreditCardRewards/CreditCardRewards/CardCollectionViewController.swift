@@ -62,6 +62,20 @@ class CardCollectionViewController: UICollectionViewController {
         layout.headerReferenceSize = CGSize(width: 0, height: 50)
 
         collectionView.collectionViewLayout = layout
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                didTapMenu(UIBarButtonItem())
+            default:
+                break
+            }
+        }
     }
     
     // MARK: - Collection View Methods

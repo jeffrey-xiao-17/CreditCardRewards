@@ -91,6 +91,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         layout.minimumLineSpacing = 2
         
         homeCollectionView.collectionViewLayout = layout
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(_:)))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+
+    @objc func respondToSwipeGesture(_ gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                didTapMenu(UIBarButtonItem())
+            default:
+                break
+            }
+        }
     }
     
     // Helper function to adjust "No Cards" label
