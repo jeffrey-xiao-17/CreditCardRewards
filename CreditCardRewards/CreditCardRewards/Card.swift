@@ -28,20 +28,6 @@ struct Card {
     let appleCBP: Double
     
     var filterSaved: [Double]
-//    var diningSaved: Double
-//    var travelSaved: Double
-//    var gasSaved: Double
-//    var shoppingSaved: Double
-//    var entertainmentSaved: Double
-//    var groceriesSaved: Double
-//    var amazonSaved: Double
-//    var wholeFoodsSaved: Double
-//    var unitedSaved: Double
-//    var deltaSaved: Double
-//    var southwestSaved: Double
-//    var britishAirwaysSaved: Double
-//    var uberSaved: Double
-//    var appleSaved: Double
     
     let imageUrl: URL
     var added: Bool
@@ -71,19 +57,5 @@ struct Card {
         self.appleCBP = appleCBP
         
         filterSaved = [dining, travel, gas, shopping, entertainment, groceries, amazon, wholeFoods, united, delta, southwest, britishAirways, uber, apple]
-//        diningSaved = dining   0
-//        travelSaved = travel  1
-//        gasSaved = gas    2
-//        shoppingSaved = shopping  3
-//        entertainmentSaved = entertainment    4
-//        groceriesSaved = groceries    5
-//        amazonSaved = amazon  6
-//        wholeFoodsSaved = wholeFoods  7
-//        unitedSaved = united  8
-//        deltaSaved = delta    9
-//        southwestSaved = southwest    10
-//        britishAirwaysSaved = britishAirways  11
-//        uberSaved = uber  12
-//        appleSaved = apple    13
     }
 }
