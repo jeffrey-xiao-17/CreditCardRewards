@@ -35,6 +35,6 @@ The second of the two analytics views, this page allows users to see their card 
 A short profile page, showing the number of cards added and date joined in the app.  Here is also where a user can log out of the app.  Note that this app uses UserDefaults to autologin, so unless the user explicitly logs out, the app will return to the user's home page upon activation.
 
 
-### Future Directions
+## Future Directions
 
 Right now, the app only contains a small subset of cards (since I had to draft up the json files myself).  The goal is to add many more cards to the database, as well as implement a better searching/cash back algorithm (currently, I combined cash back, points, and miles into one group).
