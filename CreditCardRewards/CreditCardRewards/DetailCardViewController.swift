@@ -116,7 +116,7 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         currencyFormatter.locale = Locale.current
         formatRewardsText()
         changeAddVisibility()
-        setColorOfButton()
+        setChanges()
     }
     
     @IBAction func addCash() {
@@ -140,17 +140,14 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
     @IBAction func addRemoveButtonPressed(_ sender: Any) {
         card!.added.toggle()
         changeAddVisibility()
-        addRemoveButton.setTitle(card!.added ? "Remove Card" : "Add Card", for: .normal)
-        setColorOfButton()
+        setChanges()
         ref.updateChildValues(["users/\(uid)/cards/\(card!.id - 1)/added" : card!.added])
     }
     
-    private func setColorOfButton() {
-        if card!.added {
-            addRemoveButton.setTitleColor(UIColor.systemRed, for: .normal)
-        } else {
-            addRemoveButton.setTitleColor(UIColor.systemBlue, for: .normal)
-        }
+    private func setChanges() {
+        addRemoveButton.setTitle(card!.added ? "Remove Card" : "Add Card", for: .normal)
+        card!.added ? addRemoveButton.setTitleColor(UIColor.systemRed, for: .normal) : addRemoveButton.setTitleColor(UIColor.systemBlue, for: .normal)
+        cardAddedLabel.text = card!.added ? "Added" : "Not Added"
     }
     
     private func formatRewardsText() {
