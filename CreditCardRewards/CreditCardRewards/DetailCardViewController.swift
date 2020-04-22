@@ -131,8 +131,7 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
         cardRewards.text = "\(rewardsText)"
         cardRewards.adjustsFontSizeToFitWidth = true
         cardRewards.adjustsFontForContentSizeCategory = true
-        addRemoveButton.setTitle(card!.added ? "Remove Card" : "Add Card", for: .normal)
-        cardAddedLabel.text = card!.added ? "Added" : "Not Added"
+        setChanges()
         cardCashSaved.text = "Cash saved: " + currencyFormatter.string(from: NSNumber(value: card!.cashSaved))!
         changeAddVisibility()
     }
@@ -184,10 +183,8 @@ class DetailCardViewController: UIViewController, AddCashDelegate {
     private func changeAddVisibility() {
         if !card!.added {
             self.navigationItem.rightBarButtonItem?.isEnabled = false
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clear
         } else {
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            self.navigationItem.rightBarButtonItem?.tintColor = UIColor.systemBlue
         }
     }
 }
