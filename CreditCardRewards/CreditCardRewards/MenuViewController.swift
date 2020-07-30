@@ -46,7 +46,4 @@ class MenuViewController: UITableViewController {
             self?.didTapMenuType?(menuType)
         }
     }
-    
-    
-    
 }

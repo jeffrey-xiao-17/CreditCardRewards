@@ -52,5 +52,4 @@ class SlideTransition: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.completeTransition(!isCancelled)
         }
     }
-    
 }
